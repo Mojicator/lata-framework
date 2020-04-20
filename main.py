@@ -2,7 +2,7 @@ from auida import AndroidDevice
 from log_record import Log
 import time
 
-DELAY = 2
+DELAY = 8
 
 def is_valid_number(number):
     """
