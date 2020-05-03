@@ -2,8 +2,6 @@ import json
 import time
 import os
 
-from subprocess import check_call, check_output
-
 from auida import AndroidDevice
 from log_record import Log
 
@@ -19,19 +17,10 @@ if __name__ == '__main__':
     else:
         android = AndroidDevice()
         android.select_device()
-        print(android.device)
-        check_call(['adb', '-s', android.device, 'shell', 'am', 'start',
-                        '-a', 'android.intent.action.CALL', '-d', 'tel:{0}'.format('911')])
-        # log = Log()
-        # android.dial_number('911')
-        time.sleep(3)
-        # with open('data-test.json') as json_file:
-        #     data = json.load(json_file)
-        #     for phone in data['phones']:
-        #         # android.adb_calling_test(phone, DELAY)
-        #         time.sleep(10)
-
-        #     android.initial_state()
+        with open('data-test.json') as json_file:
+            data = json.load(json_file)
+            for phone in data['phones']:
+                android.adb_calling_test(phone, DELAY)
 
             # for operation in data['operations']:
             #     print(operation[0])
