@@ -2,8 +2,8 @@ import json
 import time
 import os
 
-from auida import AndroidDevice
-from log_record import Log
+# from auida import AndroidDevice
+from escribano import Log
 
 VERSION = 2.0
 
@@ -15,12 +15,16 @@ if __name__ == '__main__':
     if not os.path.exists(test_path):
         print("Test data file not found")
     else:
-        android = AndroidDevice()
-        android.select_device()
-        with open('data-test.json') as json_file:
-            data = json.load(json_file)
-            for phone in data['phones']:
-                android.adb_calling_test(phone, DELAY)
+        # android = AndroidDevice()
+        # android.select_device()
+        log = Log()
+        log.start_test_log()
+        time.sleep(5)
+        log.end_test_log()
+        # with open('data-test.json') as json_file:
+        #     data = json.load(json_file)
+        #     for phone in data['phones']:
+        #         android.adb_calling_test(phone, DELAY)
 
             # for operation in data['operations']:
             #     print(operation[0])
