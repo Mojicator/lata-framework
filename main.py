@@ -31,14 +31,3 @@ if __name__ == '__main__':
     finally:
         for error in _error_handler:
             print(error)
-        # log = Log()
-        # log.start_test_log()
-        # time.sleep(5)
-        # log.end_test_log()
-        # with open('data-test.json') as json_file:
-        #     data = json.load(json_file)
-        #     for phone in data['phones']:
-        #         android.adb_calling_test(phone, DELAY)
-
-            # for operation in data['operations']:
-            #     print(operation[0])

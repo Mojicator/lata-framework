@@ -11,7 +11,6 @@ def escribano(test_func):
         log.star_event()
         result = test_func(*args, **kwargs)
         log.end_event(test_func.__name__, args[1], result)
-        print(result)
         return result
     return writting
 
@@ -59,6 +58,12 @@ class Log:
         """
         self.test_end = datetime.now()
         _difference = self.test_end - self.test_start
-        with open(os.path.join(self.path, 'test-v{0}.txt'.format(self.version)), mode='a') as file:
-                file.write('::{0} DATA: {1} STATUS: {2}\nDURATION: {3}\n-\n'
-                .format(message, data, utils.boolean_status(result), _difference.total_seconds()))
+        _test_status = utils.boolean_status(result)
+        if _test_status == 'PASS':
+            with open(os.path.join(self.path, 'test-v{0}.txt'.format(self.version)), mode='a') as file:
+                    file.write('::{0} DATA: {1} STATUS: PASS\nDURATION: {2}\n-\n'
+                    .format(message, data, _difference.total_seconds()))
+        elif _test_status == 'FAIL':
+            with open(os.path.join(self.path, 'test-v{0}.txt'.format(self.version)), mode='a') as file:
+                    file.write('::{0} DATA: {1} STATUS: FAIL\n{2}\nDURATION: {3}\n-\n'
+                    .format(message, data, result, _difference.total_seconds()))

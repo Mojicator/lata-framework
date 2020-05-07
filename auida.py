@@ -3,6 +3,7 @@ from uiautomator import Device
 import time
 
 from escribano import escribano
+import utils
 
 NO_CONNECTED = 'Device not connected'
 NO_SELECTED = 'No devices selected'
@@ -21,7 +22,7 @@ class AndroidDevice(object):
         :param device: string This is the number of the selected device
         :return: string Returns the serial device
         """
-        list_devices = check_list()
+        list_devices = self.check_list()
         if list_devices:
             if device <= 0 or device > len(list_devices):
                 print(NO_SELECTED)
@@ -34,6 +35,19 @@ class AndroidDevice(object):
         else:
             print(NO_CONNECTED)
             exit()
+
+    def check_list(self):
+        """
+        Using adb shell command, checks if there are devices connected and
+        retruns them on a list
+        :return: array List of available devices
+        """
+        output = check_output(['adb', 'devices'])
+        lines = output.splitlines()[1:-1]
+        if not lines or lines[0] == b'':
+            return None
+        else:
+            return lines
 
     def dial_number(self, number):
         """
@@ -48,9 +62,10 @@ class AndroidDevice(object):
             raise Exception(self.message_error.format('dial_number', NO_CONNECTED))
 
     def call_state(self):
-        # adb shell dumpsys telephony.registry | grep mCallState
-        # TODO: verificar el estado de la llamada | 0: no hay nada | 1: sonando | 2: llamando
-        pass
+        # 0: no hay nada | 1: sonando | 2: llamando
+        output = check_output(['adb', 'shell', 'dumpsys', 'telephony.registry', '|', 'grep', 'mCallState'])
+        line = output.split()[0].decode('utf-8')
+        return int(line[-1])
         
     def hang_up(self):
         """
@@ -79,6 +94,20 @@ class AndroidDevice(object):
         """
         check_call(['adb', '-s', self.device, 'shell', 'svc wifi disable'])
 
+    def verify_call(self, state1, state2):
+        if state1 == 2 and state2 == 0:
+            # hang up correctly
+            print(utils.TGREEN + '.' + utils.TNOR)
+            return True
+        elif state1 == 2 and state2 == 2:
+            # still calling
+            print(utils.TRED + 'F' + utils.TNOR)
+            return Exception('Error: device still calling')
+        elif state1 == 0 and state2 == 0:
+            # did not call
+            print(utils.TRED + 'F' + utils.TNOR)
+            return Exception('Error: device did not call')
+
     @escribano
     def adb_calling_test(self, number, delay = 5):
         """
@@ -87,10 +116,13 @@ class AndroidDevice(object):
         :param delay: int It is the time between the call event and hang up event
         """
         self.dial_number(number)
+        time.sleep(1)
+        state1 = self.call_state()
         time.sleep(delay)
         self.hang_up()
-        # TODO: validacion de status
-        return True
+        time.sleep(1)
+        state2 = self.call_state()
+        return self.verify_call(state1, state2)
 
     def adb_wifi_test(self, on_off):
         """
@@ -263,18 +295,4 @@ class AndroidDevice(object):
             self.setting_turn_off_wifi()
         time.sleep(3)
         self.d.press.home()
-    
-def check_list():
-    """
-    Using adb shell command, checks if there are devices connected and
-    retruns them on a list
-    :return: array List of available devices
-    """
-    output = check_output(['adb', 'devices'])
-    lines = output.splitlines()[1:-1]
-    if not lines or lines[0] == b'':
-        return None
-    else:
-        return lines
-        
     
