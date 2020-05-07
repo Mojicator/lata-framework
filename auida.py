@@ -1,18 +1,17 @@
 from subprocess import check_call, check_output
 from uiautomator import Device
-from log_record import Log
 import time
 
-NO_CONNECTED = 'No devices connected'
-NO_SELECTED = 'No devices selected'
-CALLING = 'Calling'
+from escribano import escribano
 
-log = Log()
+NO_CONNECTED = 'Device not connected'
+NO_SELECTED = 'No devices selected'
 
 class AndroidDevice(object):
+    message_error = 'aiuda::AndroidDevice#{0} Error: {1}'
+
     def __init__(self):
         self.device = None
-        self.call_status = None
         self.d = None
 
     def select_device(self, device = 1):
@@ -30,6 +29,7 @@ class AndroidDevice(object):
             else:
                 self.device = list_devices[device - 1].split()[0].decode('utf-8')
                 self.d = Device(self.device)
+                print('>>>> Device selected: ' + self.device + ' <<<<')
                 return self.device
         else:
             print(NO_CONNECTED)
@@ -41,17 +41,25 @@ class AndroidDevice(object):
         :param number: string It is the number to call
         """
         if self.device:
+            # TODO: validar si el numero es valido
             check_call(['adb', '-s', self.device, 'shell', 'am', 'start',
                         '-a', 'android.intent.action.CALL', '-d', 'tel:{0}'.format(number)])
-            self.call_status = CALLING
+        else:
+            raise Exception(self.message_error.format('dial_number', NO_CONNECTED))
+
+    def call_state(self):
+        # adb shell dumpsys telephony.registry | grep mCallState
+        # TODO: verificar el estado de la llamada | 0: no hay nada | 1: sonando | 2: llamando
+        pass
         
     def hang_up(self):
         """
         Hang up or cancel the calling if there is one in progress
         """
-        if self.call_status == CALLING:
+        if self.device:
             check_call(['adb', 'shell', 'input', 'keyevent 6'])
-            self.call_status = None
+        else:
+            raise Exception(self.message_error.format('hang_up', NO_CONNECTED))
 
     def adb_open_settings(self):
         """
@@ -71,35 +79,28 @@ class AndroidDevice(object):
         """
         check_call(['adb', '-s', self.device, 'shell', 'svc wifi disable'])
 
+    @escribano
     def adb_calling_test(self, number, delay = 5):
         """
         Call to the number given and hangs up after the time specified
         :param number: string It is the number to call
         :param delay: int It is the time between the call event and hang up event
         """
-        log.set_call(self.device, number)
-        log.set_event('START')
         self.dial_number(number)
         time.sleep(delay)
         self.hang_up()
-        log.set_event('END')
-        log.add_log('CALL')
+        # TODO: validacion de status
+        return True
 
     def adb_wifi_test(self, on_off):
         """
         By the state given, turn on or turn off the wifi using adb shell command
         :param on_off: string It is the state to turn ON/OFF
         """
-        log.set_serial(self.device)
-        log.set_event('START')
         if on_off == 'ON':
             self.turn_on_wifi()
-            log.set_wifi_status('ON')
         elif on_off == 'OFF':
             self.turn_off_wifi()
-            log.set_wifi_status('OFF')
-        log.set_event('END')
-        log.add_log('WIFI')
 
     def uiaviewer_generator(self, name_file):
         """
@@ -170,9 +171,7 @@ class AndroidDevice(object):
         :param number: string It is the number to call
         :param delay: int Time between call event and hang up event
         """
-        log.set_call(self.device, number)
         self.initial_state()
-        log.set_event('START')
         self.click_espanglish_button('descriptionMatches', 'Teléfono', 'Phone', 'ImageView', 'text')
         time.sleep(3)
         self.click_espanglish_button('descriptionMatches', 'teclado', 'key pad', 'ImageButton')
@@ -180,8 +179,6 @@ class AndroidDevice(object):
         self.click_espanglish_button('descriptionMatches', 'marcar', 'dial', 'ImageButton')
         time.sleep(delay)
         self.click_espanglish_button('descriptionMatches', 'Finalizar llamada', 'End call', 'ImageButton')
-        log.set_event('END')
-        log.add_log('CALL')
 
     def quick_turn_on_wifi(self):
         """
@@ -215,20 +212,14 @@ class AndroidDevice(object):
         wifi using uiautomator
         :param on_off: string It is the state to turn
         """
-        log.set_serial(self.device)
-        log.set_event('START')
         print('->')
         self.d.open.quick_settings()
         time.sleep(3)
         if on_off == 'ON':
             self.quick_turn_on_wifi()
-            log.set_wifi_status('ON')
         elif on_off == 'OFF':
             self.quick_turn_off_wifi()
-            log.set_wifi_status('OFF')
         time.sleep(3)
-        log.set_event('END')
-        log.add_log('WIFI')
         self.d.press.home()
 
     def setting_turn_on_wifi(self):
@@ -261,7 +252,6 @@ class AndroidDevice(object):
         using uiautomator
         :param on_off: string It is the state to turn
         """
-        log.set_event('START')
         self.adb_open_settings()
         time.sleep(3)
         self.click_espanglish_button('text', 'Wi-Fi', 'Network & internet', 'TextView')
@@ -269,12 +259,8 @@ class AndroidDevice(object):
         self.uiaviewer_generator('redminote_9_wifi_settings')
         if on_off == 'ON':
             self.setting_turn_on_wifi()
-            log.set_wifi_status('ON')
         elif on_off == 'OFF':
             self.setting_turn_off_wifi()
-            log.set_wifi_status('OFF')
-        log.set_event('END')
-        log.add_log('WIFI')
         time.sleep(3)
         self.d.press.home()
     

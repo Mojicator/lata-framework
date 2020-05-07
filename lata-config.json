@@ -1,0 +1,11 @@
+{
+    "name": "LATA Framework",
+    "version": 2.0,
+    "description": "Automation testing for movile",
+    "author": "Oscar Antonio Hernández Mojica",
+    "license": "ISC",
+    "dependencies": {
+        "uiautomator": "1.0",
+        "java": "8.1"
+    }
+}

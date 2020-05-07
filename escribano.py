@@ -1,7 +1,19 @@
 from datetime import datetime
 import os
 
+import utils
+
 DIR_NAME = 'output_tests'
+
+def escribano(test_func):
+    def writting(*args, **kwargs):
+        log = Log(utils.get_version())
+        log.star_event()
+        result = test_func(*args, **kwargs)
+        log.end_event(test_func.__name__, args[1], result)
+        print(result)
+        return result
+    return writting
 
 class Log:
     def __init__(self, version = 'demo'):
@@ -41,14 +53,12 @@ class Log:
     def star_event(self):
         self.test_start = datetime.now()
 
-    def end_event(self):
+    def end_event(self, message, data, result):
+        """
+        
+        """
         self.test_end = datetime.now()
-
-    def add_log(self, message):
-        """
-        By the action given, wirte on a file the test status with all the information.
-        :param action: string CALL/WIFI
-        """
+        _difference = self.test_end - self.test_start
         with open(os.path.join(self.path, 'test-v{0}.txt'.format(self.version)), mode='a') as file:
-                file.write(':: {0}\nSTART AT {1} -> END AT {2}\n-\n'
-                .format(message, self.test_start, self.test_end))
+                file.write('::{0} DATA: {1} STATUS: {2}\nDURATION: {3}\n-\n'
+                .format(message, data, utils.boolean_status(result), _difference.total_seconds()))
