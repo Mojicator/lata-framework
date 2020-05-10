@@ -1,0 +1,65 @@
+>>>>>>>>>> STARTING TEST - AT: 2020-05-08 00:16:37.590670 <<<<<<<<<<
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 5.367357
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 5.317796
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 5.300721
+-
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 5.338603
+-
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 5.299676
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 5.319284
+-
+::adb_calling_test DATA: 4492846104 STATUS: PASS
+DURATION: 10.515731
+-
+::adb_calling_test DATA: 4495483579 STATUS: PASS
+DURATION: 15.572745
+-
+::adb_calling_test DATA: 4492300451 STATUS: PASS
+DURATION: 10.617752
+-
+::adb_calling_test DATA: +541159839500 STATUS: FAIL
+ADB Call error :: Should call but did not start
+DURATION: 10.928551
+-
+>>>>>>>>>> ENDING TEST - AT: 2020-05-08 00:17:58.194623 -> TIME: 80.603953 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-08 00:23:36.074540 <<<<<<<<<<
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 5.32336
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 5.329647
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 5.31941
+-
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 5.347527
+-
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 5.307166
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 5.312717
+-
+::adb_calling_test DATA: 4492846104 STATUS: PASS
+DURATION: 11.520233
+-
+::adb_calling_test DATA: 4495483579 STATUS: PASS
+DURATION: 10.501061
+-
+::adb_calling_test DATA: 4492300451 STATUS: PASS
+DURATION: 10.695966
+-
+::adb_calling_test DATA: +541159839500 STATUS: PASS
+DURATION: 10.586519
+-
+>>>>>>>>>> ENDING TEST - AT: 2020-05-08 00:24:52.343531 -> TIME: 76.268991 <<<<<<<<<<

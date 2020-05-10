@@ -1,12 +1,20 @@
 from subprocess import check_call, check_output
 from uiautomator import Device
 import time
+import json
 
 from escribano import escribano
 import utils
 
+dictionary_key = { 'phone': 0, 'key-pad': 1, 'dial': 2, 'end-call': 3 }
+
 NO_CONNECTED = 'Device not connected'
 NO_SELECTED = 'No devices selected'
+
+# WiFi status
+DISCONNECTED = 'DISCONNECTED/DISCONNECTED'
+CONNECTED = 'CONNECTED/CONNECTED'
+UNKNOWN = 'UNKNOWN/IDLE'
 
 class AndroidDevice(object):
     message_error = 'aiuda::AndroidDevice#{0} Error: {1}'
@@ -14,6 +22,14 @@ class AndroidDevice(object):
     def __init__(self):
         self.device = None
         self.d = None
+        self.btn_elements = {}
+
+    def load_btn_elements_by_country(self):
+        country_key = check_output(['adb', 'shell', 'getprop', 'gsm.operator.iso-country']).decode('utf-8')[:-1]
+        with open('dictionary.json') as json_file:
+            data = json.load(json_file)
+            self.btn_elements = data[country_key]
+
 
     def select_device(self, device = 1):
         """
@@ -31,6 +47,7 @@ class AndroidDevice(object):
                 self.device = list_devices[device - 1].split()[0].decode('utf-8')
                 self.d = Device(self.device)
                 print('>>>> Device selected: ' + self.device + ' <<<<')
+                self.load_btn_elements_by_country()
                 return self.device
         else:
             print(NO_CONNECTED)
@@ -54,27 +71,25 @@ class AndroidDevice(object):
         Call to the specified number by adb shell command
         :param number: string It is the number to call
         """
-        if self.device:
-            # TODO: validar si el numero es valido
-            check_call(['adb', '-s', self.device, 'shell', 'am', 'start',
-                        '-a', 'android.intent.action.CALL', '-d', 'tel:{0}'.format(number)])
-        else:
-            raise Exception(self.message_error.format('dial_number', NO_CONNECTED))
+        check_call(['adb', '-s', self.device, 'shell', 'am', 'start',
+                    '-a', 'android.intent.action.CALL', '-d', 'tel:{0}'.format(number)])
 
-    def call_state(self):
-        # 0: no hay nada | 1: sonando | 2: llamando
-        output = check_output(['adb', 'shell', 'dumpsys', 'telephony.registry', '|', 'grep', 'mCallState'])
-        line = output.split()[0].decode('utf-8')
-        return int(line[-1])
-        
     def hang_up(self):
         """
         Hang up or cancel the calling if there is one in progress
         """
-        if self.device:
-            check_call(['adb', 'shell', 'input', 'keyevent 6'])
-        else:
-            raise Exception(self.message_error.format('hang_up', NO_CONNECTED))
+        check_call(['adb', 'shell', 'input', 'keyevent 6'])
+
+    def get_current_call_state(self):
+        # 0: no hay nada | 1: sonando | 2: llamando
+        output = check_output(['adb', 'shell', 'dumpsys', 'telephony.registry', '|', 'grep', 'mCallState'])
+        line = output.split()[0].decode('utf-8')
+        return int(line[-1])
+
+    def get_current_wifi_state(self):
+        output = check_output(['adb', 'shell', 'dumpsys', 'wifi', '|', 'grep', 'mNetworkInfo']).decode('utf-8')
+        state = output[output.find('state'):output.find('reason')]
+        return state.split()[1][:-1]
 
     def adb_open_settings(self):
         """
@@ -82,31 +97,44 @@ class AndroidDevice(object):
         """
         check_call(['adb', 'shell', 'am', 'start', '-a', 'android.settings.SETTINGS'])
 
-    def turn_on_wifi(self):
+    def turn_on_wifi_test(self):
         """
         Turn on the wifi by adb shell command
         """
         check_call(['adb', '-s', self.device, 'shell', 'svc wifi enable'])
 
-    def turn_off_wifi(self):
+    def turn_off_wifi_test(self):
         """
         Turn off the wifi by adb shell command
         """
         check_call(['adb', '-s', self.device, 'shell', 'svc wifi disable'])
 
-    def verify_call(self, state1, state2):
-        if state1 == 2 and state2 == 0:
+    def verify_call_process(self, calling, hang_up):
+        if calling == 2 and hang_up == 0:
             # hang up correctly
             print(utils.TGREEN + '.' + utils.TNOR)
             return True
-        elif state1 == 2 and state2 == 2:
+        elif calling == 0 and hang_up == 2:
+            # call out of time
+            print(utils.TRED + 'F' + utils.TNOR)
+            return Exception('ADB Call error :: Call started out of time')
+        elif calling == 2 and hang_up == 2:
             # still calling
             print(utils.TRED + 'F' + utils.TNOR)
-            return Exception('Error: device still calling')
-        elif state1 == 0 and state2 == 0:
+            return Exception('ADB Call error :: Should hang up but still was calling')
+        elif calling == 0 and hang_up == 0:
             # did not call
             print(utils.TRED + 'F' + utils.TNOR)
-            return Exception('Error: device did not call')
+            return Exception('ADB Call error :: Should call but did not start')
+
+    def wifi_have_to_be(self, expected_value):
+        real_value = self.get_current_wifi_state()
+        if expected_value == real_value:
+            print(utils.TGREEN + '.' + utils.TNOR)
+            return True
+        else:
+            print(utils.TRED + 'F' + utils.TNOR)
+            return Exception('ADB WiFi error state :: Expected {0} but got {1}'.format(expected_value, real_value))
 
     @escribano
     def adb_calling_test(self, number, delay = 5):
@@ -117,22 +145,27 @@ class AndroidDevice(object):
         """
         self.dial_number(number)
         time.sleep(1)
-        state1 = self.call_state()
+        _call = self.get_current_call_state()
         time.sleep(delay)
         self.hang_up()
         time.sleep(1)
-        state2 = self.call_state()
-        return self.verify_call(state1, state2)
+        _hang_up = self.get_current_call_state()
+        return self.verify_call_process(_call, _hang_up)
 
-    def adb_wifi_test(self, on_off):
+    @escribano
+    def adb_wifi_test(self, value):
         """
         By the state given, turn on or turn off the wifi using adb shell command
-        :param on_off: string It is the state to turn ON/OFF
+        :param value: string It is the state to turn ON/OFF
         """
-        if on_off == 'ON':
-            self.turn_on_wifi()
-        elif on_off == 'OFF':
-            self.turn_off_wifi()
+        if value == 0:
+            self.turn_off_wifi_test()
+            time.sleep(5)
+            return self.wifi_have_to_be(DISCONNECTED)
+        elif value == 1:
+            self.turn_on_wifi_test()
+            time.sleep(5)
+            return self.wifi_have_to_be(CONNECTED)
 
     def uiaviewer_generator(self, name_file):
         """
