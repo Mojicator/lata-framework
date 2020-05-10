@@ -175,43 +175,21 @@ class AndroidDevice(object):
         self.d.screenshot('{0}.png'.format(name_file))
         self.d.dump('{0}.uix'.format(name_file))
 
-    def click_espanglish_button(self, matcher, spanish, english, class_name, matcher_aux = None):
-        """
-        This function looks for the element specified by a UIMatcher and className and click it.
-        If 'matcher_aux' is specified, the function will look for again with UIMatcher specified
-        :param matcher: string First UIMatcher to look for
-        :param spanish: string Label of the element translated to Spanish
-        :param english: string Label of the element translated to English
-        :param class_name: string android.widget name
-        :param matcher_aux: string Secondary UIMatcher to look for
-        """
-        if matcher == 'text':
-            d_aux = self.d(text='{0}'.format(spanish), className='android.widget.{0}'.format(class_name))
-            if d_aux.exists:
-                d_aux.click()
-            else:
-                self.d(text='{0}'.format(english), className='android.widget.{0}'.format(class_name)).click()
-        elif matcher == 'descriptionMatches':
-            d_aux = self.d(descriptionMatches='{0}'.format(spanish), className='android.widget.{0}'.format(class_name))
-            if d_aux.exists:
-                d_aux.click()
-            else:
-                if matcher_aux:
-                    self.click_espanglish_button('text', spanish, english, 'TextView')
-                else:
-                    self.d(descriptionMatches='{0}'.format(english), className='android.widget.{0}'.format(class_name)).click()
-        elif matcher == 'descriptionContains':
-            d_aux = self.d(descriptionContains='{0}'.format(spanish), className='android.widget.{0}'.format(class_name))
-            if d_aux.exists:
-                d_aux.click()
-            else:
-                self.d(descriptionContains='{0}'.format(english), className='android.widget.{0}'.format(class_name)).click()
-        elif matcher == 'index':
-            d_aux = self.d(index='{0}'.format(spanish), className='android.widget.{0}'.format(class_name))
-            if d_aux.exists:
-                d_aux.click()
-            else:
-                self.d(index='{0}'.format(english), className='android.widget.{0}'.format(class_name)).click()
+
+    def find_by_image_button(self, text):
+        _device = self.d(descriptionMatches='{0}'.format(text), className='android.widget.ImageButton')
+        return _device
+
+    def find_by_text_view(self, text):
+        _device = self.d(text='{0}'.format(text), className='android.widget.TextView')
+        return _device
+
+    def find_by_image_view(self, text):
+        pass
+
+    def find_by_frame_layout(self, text):
+        _device = self.d(descriptionContains='{0}'.format(text), className='android.widget.FrameLayout')
+        return _device
 
     def initial_state(self):
         """
@@ -226,9 +204,14 @@ class AndroidDevice(object):
         :param number: string It is the number to call
         """
         for digit in number:
-            # self.d(text='{0}'.format(digit), className='android.widget.TextView').click()
-            self.d(descriptionContains='{0}'.format(digit), className='android.widget.FrameLayout').click()
+            if digit == '+':
+                _btn_bounds = self.find_by_frame_layout('0').info['bounds']
+                self.d.swipe(_btn_bounds['left'], _btn_bounds['top'],
+                             _btn_bounds['right'], _btn_bounds['bottom'], steps=20)
+            else:
+                self.find_by_frame_layout(digit).click()
 
+    @escribano
     def uia_calling_test(self, number, delay = 5):
         """
         This function sets the device on the home screen and calls the number given, after a certain time
@@ -236,14 +219,23 @@ class AndroidDevice(object):
         :param number: string It is the number to call
         :param delay: int Time between call event and hang up event
         """
-        self.initial_state()
-        self.click_espanglish_button('descriptionMatches', 'Teléfono', 'Phone', 'ImageView', 'text')
+        self.d.press.home()
+        self.find_by_text_view(self.btn_elements['phone']).click()
         time.sleep(3)
-        self.click_espanglish_button('descriptionMatches', 'teclado', 'key pad', 'ImageButton')
+        self.find_by_image_button(self.btn_elements['key-pad']).click()
+        time.sleep(1)
         self.type_number(number)
-        self.click_espanglish_button('descriptionMatches', 'marcar', 'dial', 'ImageButton')
+        self.find_by_image_button(self.btn_elements['dial']).click()
         time.sleep(delay)
-        self.click_espanglish_button('descriptionMatches', 'Finalizar llamada', 'End call', 'ImageButton')
+        _call = self.get_current_call_state()
+        time.sleep(1)
+        self.find_by_image_button(self.btn_elements['end-call']).click()
+        time.sleep(1)
+        _hang_up = self.get_current_call_state()
+        time.sleep(1)
+        self.d.press.home()
+        time.sleep(1)
+        return self.verify_call_process(_call, _hang_up)
 
     def quick_turn_on_wifi(self):
         """
@@ -311,21 +303,21 @@ class AndroidDevice(object):
         else:
             print('Wifi is already turned off')
     
-    def settings_wifi_test(self, on_off):
-        """
-        By the state given, open the settings menu and turn on or turn off the wifi
-        using uiautomator
-        :param on_off: string It is the state to turn
-        """
-        self.adb_open_settings()
-        time.sleep(3)
-        self.click_espanglish_button('text', 'Wi-Fi', 'Network & internet', 'TextView')
-        time.sleep(3)
-        self.uiaviewer_generator('redminote_9_wifi_settings')
-        if on_off == 'ON':
-            self.setting_turn_on_wifi()
-        elif on_off == 'OFF':
-            self.setting_turn_off_wifi()
-        time.sleep(3)
-        self.d.press.home()
+    # def settings_wifi_test(self, on_off):
+    #     """
+    #     By the state given, open the settings menu and turn on or turn off the wifi
+    #     using uiautomator
+    #     :param on_off: string It is the state to turn
+    #     """
+    #     self.adb_open_settings()
+    #     time.sleep(3)
+    #     self.click_espanglish_button('text', 'Wi-Fi', 'Network & internet', 'TextView')
+    #     time.sleep(3)
+    #     self.uiaviewer_generator('redminote_9_wifi_settings')
+    #     if on_off == 'ON':
+    #         self.setting_turn_on_wifi()
+    #     elif on_off == 'OFF':
+    #         self.setting_turn_off_wifi()
+    #     time.sleep(3)
+    #     self.d.press.home()
     

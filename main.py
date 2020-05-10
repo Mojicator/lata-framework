@@ -19,17 +19,24 @@ if __name__ == '__main__':
         else:
             android = AndroidDevice()
             android.select_device()
-            # print(android.btn_elements['end-call'])
-            # log = Log(utils.get_version())
-            # log.start_test_log()
-            # with open('data-test.json') as json_file:
-            #     data = json.load(json_file)
-            #     for wifi in data['wifies']:
-            #         android.adb_wifi_test(wifi)
-            #     time.sleep(1)
-            #     for phone in data['phones']:
-            #         android.adb_calling_test(phone, DELAY)
-            # log.end_test_log()
+            log = Log(utils.get_version())
+            log.start_test_log()
+            with open('data-test.json') as json_file:
+                data = json.load(json_file)
+                # adb shell
+                for wifi in data['wifies']:
+                    android.adb_wifi_test(wifi)
+                time.sleep(1)
+                for phone in data['phones']:
+                    android.adb_calling_test(phone, DELAY)
+                # uiautomator
+                time.sleep(1)
+                for wifi in data['wifies']:
+                    pass
+                time.sleep(1)
+                for phone in data['phones']:
+                    android.uia_calling_test(phone, DELAY)
+            log.end_test_log()
     except Exception as e:
         _error_handler.append(e)
     finally:

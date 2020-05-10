@@ -63,3 +63,20 @@ DURATION: 10.695966
 DURATION: 10.586519
 -
 >>>>>>>>>> ENDING TEST - AT: 2020-05-08 00:24:52.343531 -> TIME: 76.268991 <<<<<<<<<<
+::uia_calling_test DATA: +541159839500 STATUS: FAIL
+ADB Call error :: Should call but did not start
+DURATION: 39.654924
+-
+::uia_calling_test DATA: +541159839500 STATUS: FAIL
+ADB Call error :: Should hang up but still was calling
+DURATION: 30.977949
+-
+::uia_calling_test DATA: +541159839500 STATUS: PASS
+DURATION: 28.319085
+-
+::uia_calling_test DATA: +541159839500 STATUS: PASS
+DURATION: 28.893233
+-
+::uia_calling_test DATA: +541159839500 STATUS: PASS
+DURATION: 30.09841
+-
