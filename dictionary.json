@@ -3,12 +3,14 @@
         "phone": "Phone",
         "key-pad": "key pad",
         "dial": "dial",
-        "end-call": "End call"
+        "end-call": "End call",
+        "wifi": "Network & internet"
     },
     "mx": {
         "phone": "Teléfono",
         "key-pad": "teclado",
         "dial": "marcar",
-        "end-call": "Finalizar llamada"
+        "end-call": "Finalizar llamada",
+        "wifi": "Wi-Fi"
     }
 }

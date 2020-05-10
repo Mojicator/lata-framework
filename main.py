@@ -32,7 +32,10 @@ if __name__ == '__main__':
                 # uiautomator
                 time.sleep(1)
                 for wifi in data['wifies']:
-                    pass
+                    android.uia_settings_wifi_test(wifi)
+                time.sleep(1)
+                for wifi in data['wifies']:
+                    android.uia_quick_wifi_test(wifi)
                 time.sleep(1)
                 for phone in data['phones']:
                     android.uia_calling_test(phone, DELAY)

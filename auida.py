@@ -144,7 +144,7 @@ class AndroidDevice(object):
         :param delay: int It is the time between the call event and hang up event
         """
         self.dial_number(number)
-        time.sleep(1)
+        time.sleep(2)
         _call = self.get_current_call_state()
         time.sleep(delay)
         self.hang_up()
@@ -167,15 +167,6 @@ class AndroidDevice(object):
             time.sleep(5)
             return self.wifi_have_to_be(CONNECTED)
 
-    def uiaviewer_generator(self, name_file):
-        """
-        Take a screenshot fo the current device's screen in png and uix format
-        and save them on project root.
-        """
-        self.d.screenshot('{0}.png'.format(name_file))
-        self.d.dump('{0}.uix'.format(name_file))
-
-
     def find_by_image_button(self, text):
         _device = self.d(descriptionMatches='{0}'.format(text), className='android.widget.ImageButton')
         return _device
@@ -190,6 +181,9 @@ class AndroidDevice(object):
     def find_by_frame_layout(self, text):
         _device = self.d(descriptionContains='{0}'.format(text), className='android.widget.FrameLayout')
         return _device
+
+    def find_by_switch(self, text):
+        return self.d(descriptionContains='{0}'.format(text), className='android.widget.Switch')
 
     def initial_state(self):
         """
@@ -241,83 +235,73 @@ class AndroidDevice(object):
         """
         Open the quick settings menu to turn on the wifi.
         """
-        self.d.open.quick_settings()
-        time.sleep(3)
-        status = self.d(index=1, className='android.widget.Switch').checked
-        if not status:
-            self.d(index=1, className='android.widget.Switch').click()
-        else:
-            print('Wifi is already turned on')
-        self.d.press.home()
+        _wifi_btn = self.find_by_switch('Wi-Fi,')
+        if not _wifi_btn.checked:
+            _wifi_btn.click()
         
     def quick_turn_off_wifi(self):
         """
         Open the quick settings menu to turn off the wifi
         """
-        self.d.open.quick_settings()
-        time.sleep(3)
-        status = self.d(index=1, className='android.widget.Switch').checked
-        if status:
-            self.d(index=1, className='android.widget.Switch').click()
-        else:
-            print('Wifi is already turned off')
-        self.d.press.home()
+        _wifi_btn = self.find_by_switch('Wi-Fi,')
+        if _wifi_btn.checked:
+            _wifi_btn.click()
 
-    def uia_quick_wifi_test(self, on_off):
+    @escribano
+    def uia_quick_wifi_test(self, value):
         """
         By the state given, open the quick settings menu and turn on or turn off the
         wifi using uiautomator
         :param on_off: string It is the state to turn
         """
-        print('->')
-        self.d.open.quick_settings()
-        time.sleep(3)
-        if on_off == 'ON':
-            self.quick_turn_on_wifi()
-        elif on_off == 'OFF':
-            self.quick_turn_off_wifi()
-        time.sleep(3)
         self.d.press.home()
+        self.d.open.quick_settings()
+        time.sleep(2)
+        if value == 0:
+            self.quick_turn_off_wifi()
+            time.sleep(2)
+            return self.wifi_have_to_be(DISCONNECTED)
+        elif value == 1:
+            self.quick_turn_on_wifi()
+            time.sleep(4)
+            return self.wifi_have_to_be(CONNECTED)
 
     def setting_turn_on_wifi(self):
         """
         Look for the wifi button and check if it is enable. If
         it is already on, it won't do anything.
         """
-        _wifi = self.d(text='Wi-Fi', className='android.widget.TextView')
-        if not _wifi.enabled:
-            # self.d(text='Wi-Fi', className='android.widget.TextView').click()
-            self.d.click(472, 320)
-        else:
-            print('Wifi is already turned on')
+        _wifi_switch = self.find_by_switch('Wi‑Fi')
+        if not _wifi_switch.checked:
+            _wifi_switch.click()
         
     def setting_turn_off_wifi(self):
         """
         Look for the wifi button and check if it is enable. If
         it is already off, it won't do anything.
         """
-        _wifi = self.d(text='Wi-Fi', className='android.widget.TextView')
-        if _wifi.enabled:
-            # self.d(text='{0}'.format(digit), className='android.widget.TextView').click()
-            self.d.click(472, 320)
-        else:
-            print('Wifi is already turned off')
+        _wifi_switch = self.find_by_switch('Wi‑Fi')
+        if _wifi_switch.checked:
+            _wifi_switch.click()
     
-    # def settings_wifi_test(self, on_off):
-    #     """
-    #     By the state given, open the settings menu and turn on or turn off the wifi
-    #     using uiautomator
-    #     :param on_off: string It is the state to turn
-    #     """
-    #     self.adb_open_settings()
-    #     time.sleep(3)
-    #     self.click_espanglish_button('text', 'Wi-Fi', 'Network & internet', 'TextView')
-    #     time.sleep(3)
-    #     self.uiaviewer_generator('redminote_9_wifi_settings')
-    #     if on_off == 'ON':
-    #         self.setting_turn_on_wifi()
-    #     elif on_off == 'OFF':
-    #         self.setting_turn_off_wifi()
-    #     time.sleep(3)
-    #     self.d.press.home()
+    @escribano
+    def uia_settings_wifi_test(self, value):
+        """
+        By the state given, open the settings menu and turn on or turn off the wifi
+        using uiautomator
+        :param on_off: string It is the state to turn
+        """
+        self.d.press.home()
+        time.sleep(1)
+        self.adb_open_settings()
+        time.sleep(2)
+        self.find_by_text_view(self.btn_elements['wifi']).click()
+        if value == 0:
+            self.setting_turn_off_wifi()
+            time.sleep(2)
+            return self.wifi_have_to_be(DISCONNECTED)
+        elif value == 1:
+            self.setting_turn_on_wifi()
+            time.sleep(5)
+            return self.wifi_have_to_be(CONNECTED)
     
