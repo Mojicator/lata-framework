@@ -16,6 +16,8 @@ DISCONNECTED = 'DISCONNECTED/DISCONNECTED'
 CONNECTED = 'CONNECTED/CONNECTED'
 UNKNOWN = 'UNKNOWN/IDLE'
 
+CAL_DIVIDE_BY_ZERO = "Can't divide by 0"
+
 class AndroidDevice(object):
     message_error = 'aiuda::AndroidDevice#{0} Error: {1}'
 
@@ -172,8 +174,7 @@ class AndroidDevice(object):
         return _device
 
     def find_by_text_view(self, text):
-        _device = self.d(text='{0}'.format(text), className='android.widget.TextView')
-        return _device
+        return self.d(text='{0}'.format(text), className='android.widget.TextView')
 
     def find_by_image_view(self, text):
         pass
@@ -184,6 +185,21 @@ class AndroidDevice(object):
 
     def find_by_switch(self, text):
         return self.d(descriptionContains='{0}'.format(text), className='android.widget.Switch')
+
+    def find_by_text_button(self, text):
+        return self.d(text='{0}'.format(text), className='android.widget.Button')
+
+    def find_by_desc_button(self, text):
+        return self.d(descriptionMatches='{0}'.format(text), className='android.widget.Button')
+
+    def find_by_index_class(self, index_e, class_name):
+        return self.d(index=index_e, className='android.widget.{0}'.format(class_name))
+
+    def get_formula_display(self):
+        return self.d(textMatches=r'^[-]*[0-9]*\.?[0-9]*$', className='android.widget.TextView')
+
+    def get_display_culero(self):
+        return self.d(resourceId='com.android.calculator2:id/result', className='android.widget.TextView')
 
     def initial_state(self):
         """
@@ -304,4 +320,66 @@ class AndroidDevice(object):
             self.setting_turn_on_wifi()
             time.sleep(5)
             return self.wifi_have_to_be(CONNECTED)
+
+    def open_all_applications_menu(self):
+        self.d.swipe(500, 800, 500, 100, steps=10)
+
+    def enter_operation(self, operation):
+        for character in operation:
+            if character == '+':
+                self.find_by_desc_button('plus').click()
+            elif character == '-':
+                self.find_by_desc_button('minus').click()
+            elif character == '/':
+                self.find_by_desc_button('divide').click()
+            elif character == '*':
+                self.find_by_desc_button('multiply').click()
+            else:
+                self.find_by_text_button(character).click()            
+
+    def press_clear_btn(self):
+        self.find_by_text_button('CLR').click()
+
+    def press_del_btn(self):
+        self.find_by_text_button('DEL').click()
+
+    def press_equal_btn(self):
+        self.find_by_text_button('=').click()
+
+    def verify_result_operation(self, expected_value, actual_value):
+        if expected_value == actual_value:
+            print(utils.TGREEN + '.' + utils.TNOR)
+            return True
+        else:
+            print(utils.TRED + 'F' + utils.TNOR)
+            return Exception('UIAUTOMATOR OPERATION ERROR :: Expected {0} but got {1}'
+                             .format(expected_value, actual_value))
+
+    @escribano
+    def single_operation(self, operation_to_do, expected_result):
+        self.enter_operation(operation_to_do)
+        self.press_equal_btn()
+        actual_result = self.get_display_culero().info['text']
+        if isinstance(expected_result, str):
+            return self.verify_result_operation(expected_result, actual_result)
+        else:
+            return self.verify_result_operation(expected_result, utils.clean_string_negative_values(actual_result))
+
+    def uia_calculator_test(self, operations_to_do):
+        self.d.press.home()
+        self.open_all_applications_menu()
+        time.sleep(1)
+        self.find_by_text_view(self.btn_elements['calculator']).click()
+        time.sleep(1)
+        for operation in operations_to_do:
+            self.single_operation(operation[0], operation[1])
+            time.sleep(1)
+            if isinstance(operation[1], str):
+                _del_count = 0
+                while _del_count < len(operation[0]):
+                    self.press_del_btn()
+                    _del_count += 1
+            else:
+                self.press_clear_btn()
+            time.sleep(1)
     

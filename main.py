@@ -39,6 +39,8 @@ if __name__ == '__main__':
                 time.sleep(1)
                 for phone in data['phones']:
                     android.uia_calling_test(phone, DELAY)
+                    
+                android.uia_calculator_test(data['operations'])
             log.end_test_log()
     except Exception as e:
         _error_handler.append(e)

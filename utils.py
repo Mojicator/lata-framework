@@ -14,3 +14,9 @@ def boolean_status(value):
         return 'PASS'
     else:
         return 'FAIL'
+
+def clean_string_negative_values(value):
+    if '−' in value:
+        _value = value.replace('−', '-')
+        return float(_value)
+    return float(value)

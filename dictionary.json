@@ -4,13 +4,15 @@
         "key-pad": "key pad",
         "dial": "dial",
         "end-call": "End call",
-        "wifi": "Network & internet"
+        "wifi": "Network & internet",
+        "calculator": "Calculator"
     },
     "mx": {
         "phone": "Teléfono",
         "key-pad": "teclado",
         "dial": "marcar",
         "end-call": "Finalizar llamada",
-        "wifi": "Wi-Fi"
+        "wifi": "Wi-Fi",
+        "calculator": "Calculadora"
     }
 }
