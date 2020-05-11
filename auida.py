@@ -311,6 +311,7 @@ class AndroidDevice(object):
         time.sleep(1)
         self.adb_open_settings()
         time.sleep(2)
+        # print(self.btn_elements['wifi'])
         self.find_by_text_view(self.btn_elements['wifi']).click()
         if value == 0:
             self.setting_turn_off_wifi()

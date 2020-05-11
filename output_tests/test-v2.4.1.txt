@@ -232,3 +232,108 @@ DURATION: 4.099973
 DURATION: 3.095233
 -
 >>>>>>>>>> ENDING TEST - AT: 2020-05-10 19:48:18.195032 -> TIME: 395.10042 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:29:15.663422 <<<<<<<<<<
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 7.429693
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 6.7085
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 6.69775
+-
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 6.731752
+-
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 6.631318
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 6.701761
+-
+::adb_calling_test DATA: 4492846104 STATUS: FAIL
+ADB Call error :: Should call but did not start
+DURATION: 12.27211
+-
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:30:55.134442 <<<<<<<<<<
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 6.85023
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 6.857279
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 6.838867
+-
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 6.783981
+-
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 6.720111
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 6.692656
+-
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:32:08.459524 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:32:55.224146 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:35:01.630398 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:35:40.195102 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:40:34.929535 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:41:06.228708 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:41:18.554166 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:41:46.758790 <<<<<<<<<<
+>>>>>>>>>> ENDING TEST - AT: 2020-05-10 22:41:49.287390 -> TIME: 2.5286 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:42:52.404963 <<<<<<<<<<
+::single_operation DATA: 4+4 STATUS: FAIL
+None
+DURATION: 8.1e-05
+-
+>>>>>>>>>> ENDING TEST - AT: 2020-05-10 22:42:56.093574 -> TIME: 3.688611 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:43:55.408327 <<<<<<<<<<
+::single_operation DATA: 4+4 STATUS: FAIL
+None
+DURATION: 0.000399
+-
+>>>>>>>>>> ENDING TEST - AT: 2020-05-10 22:43:59.176902 -> TIME: 3.768575 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:44:34.817927 <<<<<<<<<<
+::single_operation DATA: 4+4 STATUS: FAIL
+None
+DURATION: 0.604405
+-
+>>>>>>>>>> ENDING TEST - AT: 2020-05-10 22:44:37.968939 -> TIME: 3.151012 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:45:12.672138 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:45:28.411398 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:46:11.333546 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:47:29.300819 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:50:18.188248 <<<<<<<<<<
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 6.928734
+-
+::adb_wifi_test DATA: 0 STATUS: PASS
+DURATION: 6.776866
+-
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:50:40.909674 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:51:34.655533 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:52:38.600058 <<<<<<<<<<
+::uia_settings_wifi_test DATA: 1 STATUS: FAIL
+None
+DURATION: 3.300262
+-
+::uia_settings_wifi_test DATA: 0 STATUS: FAIL
+None
+DURATION: 4.222647
+-
+::uia_settings_wifi_test DATA: 0 STATUS: FAIL
+None
+DURATION: 3.468662
+-
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:53:37.524803 <<<<<<<<<<
+::uia_settings_wifi_test DATA: 1 STATUS: FAIL
+None
+DURATION: 4.217655
+-
+::uia_settings_wifi_test DATA: 0 STATUS: FAIL
+None
+DURATION: 3.496603
+-
+>>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:53:58.222178 <<<<<<<<<<
