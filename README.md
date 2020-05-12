@@ -51,56 +51,17 @@ operativo de tu equipo desde la [página oficial](https://www.oracle.com/java/te
 
 ## Uso
 
-Descargar o clonar el repositorio de GitHub, desde la carpeta raíz del proyecto abra una terminal y ejecute lo siguiente comando:
-
-```
-python main.py
-```
-
-A continuación debe de mostrar en terminal el menú para la ejecución de los diferentes procesos, cada proceso puede ser llevado a cabo usando **adb** o **uiautomator**:
-
-```
-Call a number
-    1) by adb shell
-    2) by uiautomator
-Turn ON Wifi
-    3) by adb shell
-    4) by uiautomator
-Turn OFF Wifi
-    5) by adb shell
-    6) by uiautomator
-7) Exit
-Select an operation:_
-```
-
-Para un ejemplo seleccionamos la **opción 2**, llamar a un número usando uiautomator. Al seleccionar la opción 2, solicita al usuario el número el cual desea llamar:
-
-```
-    4) by uiautomator
-Turn OFF Wifi
-    5) by adb shell
-    6) by uiautomator
-7) Exit
-Select an operation: 2
-Enter the number to call: 4491238560
-DEVICE: emulator-5554 CALLING: 4491238560
-STRAT at 2020-04-15 22:34:21.564540
-END at 2020-04-15 22:34:39.275745
-Call a number
-    1) by adb shell
-    2) by uiautomator
-Turn ON Wifi
-    3) by adb shell
-    4) by uiautomator
-Turn OFF Wifi
-    5) by adb shell
-    6) by uiautomator
-7) Exit
-Select an operation:_
-```
-
-La ejecución del proceso debe de verse reflejado en el dispositivo, en caso contrario, tenemos un bug. El framework mostrará las marcas de tiempo de cuando inicia el proceso y
-de cuando finaliza, además de la información y estado del mismo.
-
-Cuando finaliza el proceso, LATA vuelve a preguntar al usuario si desea continuar con el
-ejecución de otro proceso o simplemente salir del framework.
+* Descargar o clonar el repositorio de GitHub.
+* Editar el archivo data-test.json:
+    - wifies: lista que describe la secuencia de encendido (1) y apagado (0).
+    - phones: lista números telefónicos al se realizara una llamada.
+    - operations: lista de operaciones a evaluar, junto con el resultado esperado. 
+* El dispositivo debe de estar conectado al equipo antes de comenzar el test.
+* Ejecutar en una terminal en raíz del proyecto el siguiente comando:
+    ```
+    $ pyhton main.py
+    ```
+* A continuación se mostrará en consola el resultado de los test en secuencia:
+    - Se mostrará con un punto **“.”**, los test que resultaron exitosos
+    - Se mostrará con una **“F”**, los test que resultaron con un error 
+* Al ejecutar el test, se crea un archivo de texto de acuerdo a la versión del framework en el directorio output_test, donde podrá consultar información más detallada de la ejecución.
