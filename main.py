@@ -24,12 +24,12 @@ if __name__ == '__main__':
             with open('data-test.json') as json_file:
                 data = json.load(json_file)
                 # adb shell
-                # for wifi in data['wifies']:
-                #     android.adb_wifi_test(wifi)
-                # time.sleep(1)
-                # for phone in data['phones']:
-                #     android.adb_calling_test(phone, DELAY)
-                # # uiautomator
+                for wifi in data['wifies']:
+                    android.adb_wifi_test(wifi)
+                time.sleep(1)
+                for phone in data['phones']:
+                    android.adb_calling_test(phone, DELAY)
+                # uiautomator
                 time.sleep(1)
                 for wifi in data['wifies']:
                     android.uia_settings_wifi_test(wifi)
@@ -40,7 +40,7 @@ if __name__ == '__main__':
                 for phone in data['phones']:
                     android.uia_calling_test(phone, DELAY)
                     
-                # android.uia_calculator_test(data['operations'])
+                android.uia_calculator_test(data['operations'])
             log.end_test_log()
     except Exception as e:
         _error_handler.append(e)

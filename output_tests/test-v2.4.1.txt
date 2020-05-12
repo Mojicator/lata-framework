@@ -1,339 +1,127 @@
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 19:32:10.407551 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-11 23:06:07.118877 <<<<<<<<<<
 ::adb_wifi_test DATA: 1 STATUS: FAIL
 ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 5.509244
+DURATION: 6.810828
 -
 ::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 5.2786
+DURATION: 5.352983
 -
 ::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 5.280619
+DURATION: 5.425903
 -
-::adb_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 5.27597
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 5.378047
 -
-::adb_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 5.282769
+::adb_wifi_test DATA: 1 STATUS: PASS
+DURATION: 5.389076
 -
 ::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 5.280179
+DURATION: 5.430624
 -
 ::adb_calling_test DATA: 4492846104 STATUS: PASS
-DURATION: 11.413481
+DURATION: 11.634906
+-
+::adb_calling_test DATA: +33170619800 STATUS: PASS
+DURATION: 11.497703
+-
+::adb_calling_test DATA: +31208080808 STATUS: PASS
+DURATION: 11.397638
 -
 ::adb_calling_test DATA: 911 STATUS: FAIL
 ADB Call error :: Should call but did not start
-DURATION: 11.654479
--
-::adb_calling_test DATA: +33170619800 STATUS: PASS
-DURATION: 11.532949
+DURATION: 11.474004
 -
 ::adb_calling_test DATA: 098 STATUS: PASS
-DURATION: 11.562862
+DURATION: 11.342185
 -
 ::adb_calling_test DATA: 9720151 STATUS: PASS
-DURATION: 11.374281
+DURATION: 11.39405
 -
-::adb_calling_test DATA: +31208080808 STATUS: PASS
-DURATION: 11.370393
+::adb_calling_test DATA: 9720525 STATUS: PASS
+DURATION: 11.378703
 -
-::uia_settings_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 10.557092
+::adb_calling_test DATA: *133 STATUS: PASS
+DURATION: 11.366543
 -
-::uia_settings_wifi_test DATA: 0 STATUS: PASS
-DURATION: 6.499818
--
-::uia_settings_wifi_test DATA: 0 STATUS: PASS
-DURATION: 6.974461
--
-::uia_settings_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 9.431962
--
-::uia_settings_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 9.609413
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 18.67049
 -
 ::uia_settings_wifi_test DATA: 0 STATUS: PASS
-DURATION: 6.470417
+DURATION: 6.887727
 -
-::uia_quick_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 7.589907
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 6.820462
 -
-::uia_quick_wifi_test DATA: 0 STATUS: PASS
-DURATION: 5.296225
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 9.618015
 -
-::uia_quick_wifi_test DATA: 0 STATUS: PASS
-DURATION: 5.319018
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 9.581457
 -
-::uia_quick_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 8.231095
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 6.807909
 -
-::uia_quick_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 7.289015
+::uia_quick_wifi_test DATA: 1 STATUS: PASS
+DURATION: 8.607682
 -
 ::uia_quick_wifi_test DATA: 0 STATUS: PASS
-DURATION: 5.279456
+DURATION: 7.513743
+-
+::uia_quick_wifi_test DATA: 0 STATUS: PASS
+DURATION: 5.848279
+-
+::uia_quick_wifi_test DATA: 1 STATUS: PASS
+DURATION: 8.061139
+-
+::uia_quick_wifi_test DATA: 1 STATUS: PASS
+DURATION: 9.027591
+-
+::uia_quick_wifi_test DATA: 0 STATUS: PASS
+DURATION: 5.346172
 -
 ::uia_calling_test DATA: 4492846104 STATUS: PASS
-DURATION: 27.379423
--
-::uia_calling_test DATA: 911 STATUS: PASS
-DURATION: 20.553134
+DURATION: 30.120178
 -
 ::uia_calling_test DATA: +33170619800 STATUS: PASS
-DURATION: 28.985964
--
-::uia_calling_test DATA: 098 STATUS: PASS
-DURATION: 20.636169
--
-::uia_calling_test DATA: 9720151 STATUS: PASS
-DURATION: 24.503949
+DURATION: 29.668765
 -
 ::uia_calling_test DATA: +31208080808 STATUS: PASS
-DURATION: 29.023949
--
-::single_operation DATA: 4+4 STATUS: PASS
-DURATION: 3.577006
--
-::single_operation DATA: 9+6/2 STATUS: PASS
-DURATION: 4.02726
--
-::single_operation DATA: 2.05-6 STATUS: PASS
-DURATION: 4.526173
--
-::single_operation DATA: 14*52 STATUS: PASS
-DURATION: 4.083747
--
-::single_operation DATA: 0/0 STATUS: PASS
-DURATION: 3.006682
--
->>>>>>>>>> ENDING TEST - AT: 2020-05-10 19:38:28.846485 -> TIME: 378.438934 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 19:41:43.094612 <<<<<<<<<<
-::adb_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 5.332028
--
-::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 5.360327
--
-::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 5.319693
--
-::adb_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 5.317979
--
-::adb_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 5.323781
--
-::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 5.330704
--
-::adb_calling_test DATA: 4492846104 STATUS: PASS
-DURATION: 11.329877
--
-::adb_calling_test DATA: 911 STATUS: FAIL
-ADB Call error :: Should call but did not start
-DURATION: 11.905798
--
-::adb_calling_test DATA: +33170619800 STATUS: PASS
-DURATION: 11.41534
--
-::adb_calling_test DATA: 098 STATUS: PASS
-DURATION: 11.481946
--
-::adb_calling_test DATA: 9720151 STATUS: PASS
-DURATION: 11.550843
--
-::adb_calling_test DATA: +31208080808 STATUS: PASS
-DURATION: 11.529277
--
-::uia_settings_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 21.922606
--
-::uia_settings_wifi_test DATA: 0 STATUS: PASS
-DURATION: 7.164873
--
-::uia_settings_wifi_test DATA: 0 STATUS: PASS
-DURATION: 7.038843
--
-::uia_settings_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 9.968963
--
-::uia_settings_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 10.061555
--
-::uia_settings_wifi_test DATA: 0 STATUS: PASS
-DURATION: 6.796853
--
-::uia_quick_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 7.728752
--
-::uia_quick_wifi_test DATA: 0 STATUS: PASS
-DURATION: 5.341658
--
-::uia_quick_wifi_test DATA: 0 STATUS: PASS
-DURATION: 5.500992
--
-::uia_quick_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 7.325036
--
-::uia_quick_wifi_test DATA: 1 STATUS: FAIL
-ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
-DURATION: 7.331624
--
-::uia_quick_wifi_test DATA: 0 STATUS: PASS
-DURATION: 5.279532
--
-::uia_calling_test DATA: 4492846104 STATUS: PASS
-DURATION: 27.623618
+DURATION: 29.263995
 -
 ::uia_calling_test DATA: 911 STATUS: PASS
-DURATION: 21.031396
--
-::uia_calling_test DATA: +33170619800 STATUS: PASS
-DURATION: 29.489166
+DURATION: 20.840532
 -
 ::uia_calling_test DATA: 098 STATUS: PASS
-DURATION: 21.100729
+DURATION: 20.434742
 -
 ::uia_calling_test DATA: 9720151 STATUS: PASS
-DURATION: 24.97407
+DURATION: 24.065272
 -
-::uia_calling_test DATA: +31208080808 STATUS: PASS
-DURATION: 29.533055
+::uia_calling_test DATA: 9720525 STATUS: PASS
+DURATION: 24.235104
+-
+::uia_calling_test DATA: *133 STATUS: PASS
+DURATION: 21.03736
 -
 ::single_operation DATA: 4+4 STATUS: PASS
-DURATION: 3.467038
+DURATION: 3.204192
 -
 ::single_operation DATA: 9+6/2 STATUS: PASS
-DURATION: 4.338123
+DURATION: 4.074133
 -
 ::single_operation DATA: 2.05-6 STATUS: PASS
-DURATION: 5.006304
+DURATION: 4.509631
 -
 ::single_operation DATA: 14*52 STATUS: PASS
-DURATION: 4.099973
+DURATION: 4.09094
 -
 ::single_operation DATA: 0/0 STATUS: PASS
-DURATION: 3.095233
+DURATION: 3.030559
 -
->>>>>>>>>> ENDING TEST - AT: 2020-05-10 19:48:18.195032 -> TIME: 395.10042 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:29:15.663422 <<<<<<<<<<
-::adb_wifi_test DATA: 1 STATUS: PASS
-DURATION: 7.429693
+::single_operation DATA: 0.9999+0.0001 STATUS: PASS
+DURATION: 9.595936
 -
-::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 6.7085
+::single_operation DATA: 412.58/125*0.5 STATUS: PASS
+DURATION: 10.690077
 -
-::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 6.69775
--
-::adb_wifi_test DATA: 1 STATUS: PASS
-DURATION: 6.731752
--
-::adb_wifi_test DATA: 1 STATUS: PASS
-DURATION: 6.631318
--
-::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 6.701761
--
-::adb_calling_test DATA: 4492846104 STATUS: FAIL
-ADB Call error :: Should call but did not start
-DURATION: 12.27211
--
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:30:55.134442 <<<<<<<<<<
-::adb_wifi_test DATA: 1 STATUS: PASS
-DURATION: 6.85023
--
-::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 6.857279
--
-::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 6.838867
--
-::adb_wifi_test DATA: 1 STATUS: PASS
-DURATION: 6.783981
--
-::adb_wifi_test DATA: 1 STATUS: PASS
-DURATION: 6.720111
--
-::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 6.692656
--
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:32:08.459524 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:32:55.224146 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:35:01.630398 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:35:40.195102 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:40:34.929535 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:41:06.228708 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:41:18.554166 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:41:46.758790 <<<<<<<<<<
->>>>>>>>>> ENDING TEST - AT: 2020-05-10 22:41:49.287390 -> TIME: 2.5286 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:42:52.404963 <<<<<<<<<<
-::single_operation DATA: 4+4 STATUS: FAIL
-None
-DURATION: 8.1e-05
--
->>>>>>>>>> ENDING TEST - AT: 2020-05-10 22:42:56.093574 -> TIME: 3.688611 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:43:55.408327 <<<<<<<<<<
-::single_operation DATA: 4+4 STATUS: FAIL
-None
-DURATION: 0.000399
--
->>>>>>>>>> ENDING TEST - AT: 2020-05-10 22:43:59.176902 -> TIME: 3.768575 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:44:34.817927 <<<<<<<<<<
-::single_operation DATA: 4+4 STATUS: FAIL
-None
-DURATION: 0.604405
--
->>>>>>>>>> ENDING TEST - AT: 2020-05-10 22:44:37.968939 -> TIME: 3.151012 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:45:12.672138 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:45:28.411398 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:46:11.333546 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:47:29.300819 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:50:18.188248 <<<<<<<<<<
-::adb_wifi_test DATA: 1 STATUS: PASS
-DURATION: 6.928734
--
-::adb_wifi_test DATA: 0 STATUS: PASS
-DURATION: 6.776866
--
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:50:40.909674 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:51:34.655533 <<<<<<<<<<
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:52:38.600058 <<<<<<<<<<
-::uia_settings_wifi_test DATA: 1 STATUS: FAIL
-None
-DURATION: 3.300262
--
-::uia_settings_wifi_test DATA: 0 STATUS: FAIL
-None
-DURATION: 4.222647
--
-::uia_settings_wifi_test DATA: 0 STATUS: FAIL
-None
-DURATION: 3.468662
--
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:53:37.524803 <<<<<<<<<<
-::uia_settings_wifi_test DATA: 1 STATUS: FAIL
-None
-DURATION: 4.217655
--
-::uia_settings_wifi_test DATA: 0 STATUS: FAIL
-None
-DURATION: 3.496603
--
->>>>>>>>>> STARTING TEST - AT: 2020-05-10 22:53:58.222178 <<<<<<<<<<
+>>>>>>>>>> ENDING TEST - AT: 2020-05-11 23:14:16.710259 -> TIME: 489.591382 <<<<<<<<<<

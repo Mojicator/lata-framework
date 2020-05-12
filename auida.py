@@ -6,8 +6,6 @@ import json
 from escribano import escribano
 import utils
 
-dictionary_key = { 'phone': 0, 'key-pad': 1, 'dial': 2, 'end-call': 3 }
-
 NO_CONNECTED = 'Device not connected'
 NO_SELECTED = 'No devices selected'
 
@@ -16,10 +14,10 @@ DISCONNECTED = 'DISCONNECTED/DISCONNECTED'
 CONNECTED = 'CONNECTED/CONNECTED'
 UNKNOWN = 'UNKNOWN/IDLE'
 
+# Calculator
 CAL_DIVIDE_BY_ZERO = "Can't divide by 0"
 
 class AndroidDevice(object):
-    message_error = 'aiuda::AndroidDevice#{0} Error: {1}'
 
     def __init__(self):
         self.device = None
@@ -27,6 +25,8 @@ class AndroidDevice(object):
         self.btn_elements = {}
 
     def load_btn_elements_by_country(self):
+        """
+        """
         country_key = check_output(['adb', 'shell', 'getprop', 'gsm.operator.iso-country']).decode('utf-8')[:-1]
         with open('dictionary.json') as json_file:
             data = json.load(json_file)
@@ -176,9 +176,6 @@ class AndroidDevice(object):
     def find_by_text_view(self, text):
         return self.d(text='{0}'.format(text), className='android.widget.TextView')
 
-    def find_by_image_view(self, text):
-        pass
-
     def find_by_frame_layout(self, text):
         _device = self.d(descriptionContains='{0}'.format(text), className='android.widget.FrameLayout')
         return _device
@@ -198,15 +195,8 @@ class AndroidDevice(object):
     def get_formula_display(self):
         return self.d(textMatches=r'^[-]*[0-9]*\.?[0-9]*$', className='android.widget.TextView')
 
-    def get_display_culero(self):
+    def get_display_result(self):
         return self.d(resourceId='com.android.calculator2:id/result', className='android.widget.TextView')
-
-    def initial_state(self):
-        """
-        This function sets the device on the home screen
-        """
-        self.d.screen.on()
-        self.d.press.home()
     
     def type_number(self, number):
         """
@@ -360,7 +350,7 @@ class AndroidDevice(object):
     def single_operation(self, operation_to_do, expected_result):
         self.enter_operation(operation_to_do)
         self.press_equal_btn()
-        actual_result = self.get_display_culero().info['text']
+        actual_result = self.get_display_result().info['text']
         if isinstance(expected_result, str):
             return self.verify_result_operation(expected_result, actual_result)
         else:
