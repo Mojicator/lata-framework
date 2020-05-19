@@ -28,6 +28,9 @@ class AndroidDevice(object):
         """
         """
         country_key = check_output(['adb', 'shell', 'getprop', 'gsm.operator.iso-country']).decode('utf-8')[:-1]
+        print(country_key)
+        if '\r' in country_key:
+            country_key = country_key.replace('\r', '')
         with open('dictionary.json') as json_file:
             data = json.load(json_file)
             self.btn_elements = data[country_key]
