@@ -40,6 +40,7 @@ class Overseer(object):
         if not res['success']:
             raise Exception(res['description'])
         self.devices[index]['remoteConnectUrl'] = res['device']['remoteConnectUrl']
+        print('Using device: {0} | URL: {1}'.format(self.devices[index]['serial'], self.devices[index]['remoteConnectUrl']))
 
     def use_device(self, index):
         headers = {
@@ -66,9 +67,11 @@ class Overseer(object):
         if not res['success']:
             raise Exception(res['description'])
         self.devices[index]['remoteConnectUrl'] = None
+        print('Stop using device: {}'.format(self.devices[index]['serial']))
 
     def connect_adb_device(self, index):
         _device = self.devices[index]['remoteConnectUrl']
+        print('Connecting adb: {}'.format(_device))
         check_call(['adb', 'connect', _device])
 
 
@@ -77,3 +80,4 @@ class Overseer(object):
         output = check_output(['adb', 'disconnect', _device]).decode('utf-8')
         if not 'disconnected' in output:
             raise Exception(output)
+        print('Disconnecting adb: {}'.format(_device))

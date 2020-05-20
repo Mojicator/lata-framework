@@ -19,9 +19,10 @@ CAL_DIVIDE_BY_ZERO = "Can't divide by 0"
 
 class AndroidDevice(object):
 
-    def __init__(self):
+    def __init__(self, sdk = 25):
         self.device = None
         self.d = None
+        self.sdk = sdk
         self.btn_elements = {}
 
     def load_btn_elements_by_country(self):
@@ -186,6 +187,9 @@ class AndroidDevice(object):
     def find_by_switch(self, text):
         return self.d(descriptionContains='{0}'.format(text), className='android.widget.Switch')
 
+    def find_by_switch_text(self, text):
+        return self.d(text='{0}'.format(text), className='android.widget.Switch')
+
     def find_by_text_button(self, text):
         return self.d(text='{0}'.format(text), className='android.widget.Button')
 
@@ -280,7 +284,13 @@ class AndroidDevice(object):
         Look for the wifi button and check if it is enable. If
         it is already on, it won't do anything.
         """
-        _wifi_switch = self.find_by_switch('Wi‑Fi')
+        # try:
+        #     _wifi_switch = self.find_by_switch('Wi‑Fi')
+        # except:
+        #     _wifi_switch = self.find_by_switch_text('ON')
+        # finally:
+        #     return Exception('404 Botton Not found :: WiFi swith buttom')
+        _wifi_switch = self.find_by_switch_text('ON')
         if not _wifi_switch.checked:
             _wifi_switch.click()
         
@@ -289,7 +299,8 @@ class AndroidDevice(object):
         Look for the wifi button and check if it is enable. If
         it is already off, it won't do anything.
         """
-        _wifi_switch = self.find_by_switch('Wi‑Fi')
+        # _wifi_switch = self.find_by_switch('Wi‑Fi')
+        _wifi_switch = self.find_by_switch_text('OFF')
         if _wifi_switch.checked:
             _wifi_switch.click()
     
@@ -304,8 +315,15 @@ class AndroidDevice(object):
         time.sleep(1)
         self.adb_open_settings()
         time.sleep(2)
-        # print(self.btn_elements['wifi'])
-        self.find_by_text_view(self.btn_elements['wifi']).click()
+        # try:
+        #     self.find_by_text_view(self.btn_elements['wifi'][0]).click()
+        # except:
+        #     self.find_by_text_view(self.btn_elements['wifi'][1]).click()
+        # finally:
+        #     return Exception('404 Botton Not found :: WiFi configurations')
+        # self.find_by_text_view(self.btn_elements['wifi'][1]).click()
+        self.find_by_index_class(4, 'LinearLayout')
+        # self.find_by_text_view(self.btn_elements['wifi']).click()
         if value == 0:
             self.setting_turn_off_wifi()
             time.sleep(2)

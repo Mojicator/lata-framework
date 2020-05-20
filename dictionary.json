@@ -4,7 +4,7 @@
         "key-pad": "key pad",
         "dial": "dial",
         "end-call": "End call",
-        "wifi": "Network & internet",
+        "wifi": ["Network & internet", "Wi-Fi"],
         "calculator": "Calculator"
     },
     "mx": {
