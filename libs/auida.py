@@ -3,8 +3,8 @@ from uiautomator import Device
 import time
 import json
 
-from escribano import escribano
-import utils
+from libs.escribano import escribano
+import libs.utils as utils
 
 NO_CONNECTED = 'Device not connected'
 NO_SELECTED = 'No devices selected'
@@ -19,10 +19,10 @@ CAL_DIVIDE_BY_ZERO = "Can't divide by 0"
 
 class AndroidDevice(object):
 
-    def __init__(self, sdk = 25):
+    def __init__(self):
         self.device = None
         self.d = None
-        self.sdk = sdk
+        self.sdk = 25
         self.btn_elements = {}
 
     def load_btn_elements_by_country(self):
@@ -35,7 +35,6 @@ class AndroidDevice(object):
         with open('dictionary.json') as json_file:
             data = json.load(json_file)
             self.btn_elements = data[country_key]
-
 
     def select_device(self, device = 1):
         """
@@ -54,6 +53,7 @@ class AndroidDevice(object):
                 self.d = Device(self.device)
                 print('>>>> Device selected: ' + self.device + ' <<<<')
                 self.load_btn_elements_by_country()
+                self.get_api_level()
                 return self.device
         else:
             print(NO_CONNECTED)
@@ -71,6 +71,12 @@ class AndroidDevice(object):
             return None
         else:
             return lines
+
+    def get_api_level(self):
+        output = check_output(['adb', 'shell', 'getprop', 'ro.build.version.sdk']).decode('utf-8')[:-1]
+        if '\r' in output:
+            output = output.replace('\r', '')
+        self.sdk = int(output)
 
     def dial_number(self, number):
         """
@@ -180,6 +186,9 @@ class AndroidDevice(object):
     def find_by_text_view(self, text):
         return self.d(text='{0}'.format(text), className='android.widget.TextView')
 
+    def find_by_image_view(self, text):
+        return self.d(descriptionContains='{0}'.format(text), className='android.widget.ImageView')
+
     def find_by_frame_layout(self, text):
         _device = self.d(descriptionContains='{0}'.format(text), className='android.widget.FrameLayout')
         return _device
@@ -196,6 +205,21 @@ class AndroidDevice(object):
     def find_by_desc_button(self, text):
         return self.d(descriptionMatches='{0}'.format(text), className='android.widget.Button')
 
+    def get_wifi_switch_bar(self):
+        return self.d(resourceId='com.android.settings:id/switch_bar', className='android.widget.Switch')
+
+    def get_wifi_switch_widget(self):
+        return self.d(resourceId='com.android.settings:id/switchWidget', className='android.widget.Switch')
+
+    def get_wifi_toggle_bar(self):
+        return self.d(resourceId='android:id/toggle', className='android.widget.Switch')
+
+    def get_wifi_quick_btn(self, text):
+        return self.d(descriptionContains='{0}'.format(text), className='android.widget.Button')
+
+    def get_wifi_quick_switch(self, text):
+        return self.d(descriptionContains='{0}'.format(text), className='android.widget.Switch')
+
     def find_by_index_class(self, index_e, class_name):
         return self.d(index=index_e, className='android.widget.{0}'.format(class_name))
 
@@ -203,7 +227,10 @@ class AndroidDevice(object):
         return self.d(textMatches=r'^[-]*[0-9]*\.?[0-9]*$', className='android.widget.TextView')
 
     def get_display_result(self):
-        return self.d(resourceId='com.android.calculator2:id/result', className='android.widget.TextView')
+        if self.sdk > 25:
+            return self.d(resourceId='com.google.android.calculator:id/result', className='android.widget.TextView')
+        else:
+            return self.d(resourceId='com.android.calculator2:id/result', className='android.widget.TextView')
     
     def type_number(self, number):
         """
@@ -214,7 +241,7 @@ class AndroidDevice(object):
             if digit == '+':
                 _btn_bounds = self.find_by_frame_layout('0').info['bounds']
                 self.d.swipe(_btn_bounds['left'], _btn_bounds['top'],
-                             _btn_bounds['right'], _btn_bounds['bottom'], steps=20)
+                             _btn_bounds['right'], _btn_bounds['bottom'], steps=30)
             else:
                 self.find_by_frame_layout(digit).click()
 
@@ -227,16 +254,24 @@ class AndroidDevice(object):
         :param delay: int Time between call event and hang up event
         """
         self.d.press.home()
+        self.open_all_applications_menu()
+        time.sleep(2)
         self.find_by_text_view(self.btn_elements['phone']).click()
         time.sleep(3)
-        self.find_by_image_button(self.btn_elements['key-pad']).click()
+        if self.sdk > 25:
+            self.find_by_image_button(self.btn_elements['key-pad'][0]).click()
+        else:
+            self.find_by_image_button(self.btn_elements['key-pad'][1]).click()
         time.sleep(1)
         self.type_number(number)
         self.find_by_image_button(self.btn_elements['dial']).click()
         time.sleep(delay)
         _call = self.get_current_call_state()
         time.sleep(1)
-        self.find_by_image_button(self.btn_elements['end-call']).click()
+        if self.sdk > 25:
+            self.find_by_image_button(self.btn_elements['end-call'][0]).click()
+        else:
+            self.find_by_image_button(self.btn_elements['end-call'][1]).click()
         time.sleep(1)
         _hang_up = self.get_current_call_state()
         time.sleep(1)
@@ -248,17 +283,33 @@ class AndroidDevice(object):
         """
         Open the quick settings menu to turn on the wifi.
         """
-        _wifi_btn = self.find_by_switch('Wi-Fi,')
-        if not _wifi_btn.checked:
+        if self.sdk > 25:
+            _wifi_btn = self.get_wifi_quick_switch('Wi-Fi,')
+            if not _wifi_btn.checked:
+                _wifi_btn.click()
+        else:
+            _wifi_btn = self.get_wifi_quick_btn('Wi-Fi')
             _wifi_btn.click()
+            _wifi_switch_switch = self.get_wifi_toggle_bar()
+            if not _wifi_switch_switch.checked:
+                _wifi_switch_switch.click()
+        time.sleep(2)
         
     def quick_turn_off_wifi(self):
         """
         Open the quick settings menu to turn off the wifi
         """
-        _wifi_btn = self.find_by_switch('Wi-Fi,')
-        if _wifi_btn.checked:
+        if self.sdk > 25:
+            _wifi_btn = self.get_wifi_quick_switch('Wi-Fi,')
+            if _wifi_btn.checked:
+                _wifi_btn.click()
+        else:
+            _wifi_btn = self.get_wifi_quick_btn('Wi-Fi')
             _wifi_btn.click()
+            _wifi_switch_switch = self.get_wifi_toggle_bar()
+            if _wifi_switch_switch.checked:
+                _wifi_switch_switch.click()
+        time.sleep(2)
 
     @escribano
     def uia_quick_wifi_test(self, value):
@@ -269,7 +320,7 @@ class AndroidDevice(object):
         """
         self.d.press.home()
         self.d.open.quick_settings()
-        time.sleep(2)
+        time.sleep(10)
         if value == 0:
             self.quick_turn_off_wifi()
             time.sleep(2)
@@ -284,13 +335,10 @@ class AndroidDevice(object):
         Look for the wifi button and check if it is enable. If
         it is already on, it won't do anything.
         """
-        # try:
-        #     _wifi_switch = self.find_by_switch('Wi‑Fi')
-        # except:
-        #     _wifi_switch = self.find_by_switch_text('ON')
-        # finally:
-        #     return Exception('404 Botton Not found :: WiFi swith buttom')
-        _wifi_switch = self.find_by_switch_text('ON')
+        if self.sdk > 25:
+            _wifi_switch = self.find_by_switch('Wi-Fi')
+        else:
+            _wifi_switch = self.get_wifi_switch_bar()
         if not _wifi_switch.checked:
             _wifi_switch.click()
         
@@ -299,8 +347,10 @@ class AndroidDevice(object):
         Look for the wifi button and check if it is enable. If
         it is already off, it won't do anything.
         """
-        # _wifi_switch = self.find_by_switch('Wi‑Fi')
-        _wifi_switch = self.find_by_switch_text('OFF')
+        if self.sdk > 25:
+            _wifi_switch = self.find_by_switch('Wi-Fi')
+        else:
+            _wifi_switch = self.get_wifi_switch_bar()
         if _wifi_switch.checked:
             _wifi_switch.click()
     
@@ -315,45 +365,48 @@ class AndroidDevice(object):
         time.sleep(1)
         self.adb_open_settings()
         time.sleep(2)
-        # try:
-        #     self.find_by_text_view(self.btn_elements['wifi'][0]).click()
-        # except:
-        #     self.find_by_text_view(self.btn_elements['wifi'][1]).click()
-        # finally:
-        #     return Exception('404 Botton Not found :: WiFi configurations')
-        # self.find_by_text_view(self.btn_elements['wifi'][1]).click()
-        self.find_by_index_class(4, 'LinearLayout')
-        # self.find_by_text_view(self.btn_elements['wifi']).click()
+        if self.sdk > 25:
+            self.find_by_text_view(self.btn_elements['wifi'][1]).click()
+        else:
+            self.find_by_text_view(self.btn_elements['wifi'][1]).click()
+        time.sleep(2)
         if value == 0:
             self.setting_turn_off_wifi()
-            time.sleep(2)
+            time.sleep(4)
             return self.wifi_have_to_be(DISCONNECTED)
         elif value == 1:
             self.setting_turn_on_wifi()
-            time.sleep(5)
+            time.sleep(6)
             return self.wifi_have_to_be(CONNECTED)
 
     def open_all_applications_menu(self):
-        self.d.swipe(500, 800, 500, 100, steps=10)
+        if self.sdk > 25:
+            self.d.swipe(500, 800, 500, 100, steps=10)
+        else:
+            _up_button = self.find_by_image_view('Apps list')
+            _up_button.click()
 
     def enter_operation(self, operation):
         for character in operation:
             if character == '+':
-                self.find_by_desc_button('plus').click()
+                self.find_by_desc_button(self.btn_elements['operations'][0]).click()
             elif character == '-':
-                self.find_by_desc_button('minus').click()
+                self.find_by_desc_button(self.btn_elements['operations'][1]).click()
             elif character == '/':
-                self.find_by_desc_button('divide').click()
+                self.find_by_desc_button(self.btn_elements['operations'][3]).click()
             elif character == '*':
-                self.find_by_desc_button('multiply').click()
+                self.find_by_desc_button(self.btn_elements['operations'][2]).click()
             else:
                 self.find_by_text_button(character).click()            
 
     def press_clear_btn(self):
-        self.find_by_text_button('CLR').click()
+        self.find_by_desc_button(self.btn_elements['operations'][5]).click()
 
     def press_del_btn(self):
-        self.find_by_text_button('DEL').click()
+        if self.sdk > 25:
+            self.find_by_image_button(self.btn_elements['operations'][4]).click()
+        else:
+            self.find_by_desc_button(self.btn_elements['operations'][4]).click()
 
     def press_equal_btn(self):
         self.find_by_text_button('=').click()
@@ -372,8 +425,9 @@ class AndroidDevice(object):
         self.enter_operation(operation_to_do)
         self.press_equal_btn()
         actual_result = self.get_display_result().info['text']
-        if isinstance(expected_result, str):
-            return self.verify_result_operation(expected_result, actual_result)
+        if isinstance(expected_result, list):
+            if actual_result in expected_result:
+                return self.verify_result_operation(expected_result[expected_result.index(actual_result)], actual_result)
         else:
             return self.verify_result_operation(expected_result, utils.clean_string_negative_values(actual_result))
 
@@ -386,7 +440,7 @@ class AndroidDevice(object):
         for operation in operations_to_do:
             self.single_operation(operation[0], operation[1])
             time.sleep(1)
-            if isinstance(operation[1], str):
+            if isinstance(operation[1], list):
                 _del_count = 0
                 while _del_count < len(operation[0]):
                     self.press_del_btn()

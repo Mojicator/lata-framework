@@ -1,7 +1,7 @@
 from datetime import datetime
 import os
 
-import utils
+import libs.utils as utils
 
 DIR_NAME = 'output_tests'
 

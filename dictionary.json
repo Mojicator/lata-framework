@@ -1,18 +1,20 @@
 {
     "us": {
         "phone": "Phone",
-        "key-pad": "key pad",
+        "key-pad": ["key pad", "dial pad"],
         "dial": "dial",
-        "end-call": "End call",
-        "wifi": ["Network & internet", "Wi-Fi"],
-        "calculator": "Calculator"
+        "end-call": ["End call", "End Call"],
+        "wifi": ["Network & internet", "Wi‑Fi"],
+        "calculator": "Calculator",
+        "operations": ["plus", "minus", "multiply", "divide", "delete", "clear"]
     },
     "mx": {
         "phone": "Teléfono",
-        "key-pad": "teclado",
+        "key-pad": ["teclado"],
         "dial": "marcar",
-        "end-call": "Finalizar llamada",
-        "wifi": "Conexiones",
-        "calculator": "Calculadora"
+        "end-call": ["Finalizar llamada"],
+        "wifi": ["Conexiones", "Internet y red"],
+        "calculator": "Calculadora",
+        "operations": ["más", "menos", "multiplicar", "división", "eliminar", "borrar"]
     }
 }
