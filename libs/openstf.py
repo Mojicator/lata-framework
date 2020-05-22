@@ -3,12 +3,11 @@ from urllib.parse import urljoin
 from subprocess import check_call, check_output
 
 TOKEN = '27d177586c1d45d898e855b2af30c14b0a6cfacb35724451b8d1e51430756088'
-STF_URL = 'http://192.168.0.4:7106'
+STF_URL = 'http://{0}'
 
 class Overseer(object):
-    def __init__(self):
-        self.farm_ip = ''
-        self.farm_port = ''
+    def __init__(self, ip_direction):
+        self.server = STF_URL.format(ip_direction)
         self.devices = []
 
     def get_all_connected_devices(self):
@@ -17,7 +16,7 @@ class Overseer(object):
             'Authorization': 'Bearer {}'.format(TOKEN)
         }
         api_call = '/api/v1/devices/'
-        url = urljoin(STF_URL, api_call)
+        url = urljoin(self.server, api_call)
         res = requests.get(url, headers=headers).json()
         if not res['success']:
             raise Exception(res['description'])
@@ -35,8 +34,9 @@ class Overseer(object):
             'Authorization': 'Bearer {}'.format(TOKEN)
         }
         api_call = '/api/v1/user/devices/{0}'.format(self.devices[index]['serial'])
-        url = urljoin(STF_URL, api_call)
+        url = urljoin(self.server, api_call)
         res = requests.get(url, headers=headers).json()
+        # print(res['device']['remoteConnectUrl'])
         if not res['success']:
             raise Exception(res['description'])
         self.devices[index]['remoteConnectUrl'] = res['device']['remoteConnectUrl']
@@ -49,12 +49,13 @@ class Overseer(object):
         }
         data = '{{\"serial\": \"{0}\"}}'.format(self.devices[index]['serial'])
         api_call = '/api/v1/user/devices'
-        url = urljoin(STF_URL, api_call)
-        res = requests.post(url, data=data, headers=headers)
-        calis = res.json()
-        if not calis['success']:
+        url = urljoin(self.server, api_call)
+        res = requests.post(url, data=data, headers=headers).json()
+        if not res['success']:
             raise Exception(res['description'])
-        self.get_adb_debug_connection(index)
+        print(res)
+        # print('caca')
+        # self.get_adb_debug_connection(index)
 
     def stop_using_device(self, index):
         headers = {
@@ -62,7 +63,7 @@ class Overseer(object):
             'Authorization': 'Bearer {}'.format(TOKEN)
         }
         api_call = '/api/v1/user/devices/{0}'.format(self.devices[index]['serial'])
-        url = urljoin(STF_URL, api_call)
+        url = urljoin(self.server, api_call)
         res = requests.delete(url, headers=headers).json()
         if not res['success']:
             raise Exception(res['description'])
@@ -71,6 +72,7 @@ class Overseer(object):
 
     def connect_adb_device(self, index):
         _device = self.devices[index]['remoteConnectUrl']
+        # print(self.devices[index])
         print('Connecting adb: {}'.format(_device))
         check_call(['adb', 'connect', _device])
 

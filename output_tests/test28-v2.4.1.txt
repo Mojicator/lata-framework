@@ -1,0 +1,62 @@
+>>>>>>>>>> STARTING TEST - AT: 2020-05-21 21:28:19.034627 <<<<<<<<<<
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 46.694029
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 11.936203
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 10.255463
+-
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 13.924397
+-
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 15.921987
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 11.958825
+-
+>>>>>>>>>> ENDING TEST - AT: 2020-05-21 21:30:09.749330 -> TIME: 110.714703 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-21 23:17:22.199591 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-21 23:35:46.947638 <<<<<<<<<<
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 55.888028
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 13.347057
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 14.276148
+-
+::uia_settings_wifi_test DATA: 1 STATUS: FAIL
+ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
+DURATION: 590.439071
+-
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 18.011479
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 13.327939
+-
+::uia_quick_wifi_test DATA: 1 STATUS: PASS
+DURATION: 26.908319
+-
+::uia_quick_wifi_test DATA: 0 STATUS: PASS
+DURATION: 22.954662
+-
+::uia_quick_wifi_test DATA: 0 STATUS: PASS
+DURATION: 22.852586
+-
+::uia_quick_wifi_test DATA: 1 STATUS: PASS
+DURATION: 26.749248
+-
+::uia_quick_wifi_test DATA: 1 STATUS: PASS
+DURATION: 26.609161
+-
+::uia_quick_wifi_test DATA: 0 STATUS: PASS
+DURATION: 23.725815
+-
+::uia_calling_test DATA: 4492846104 STATUS: PASS
+DURATION: 94.794722
+-

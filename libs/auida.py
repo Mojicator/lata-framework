@@ -25,10 +25,14 @@ class AndroidDevice(object):
         self.sdk = 25
         self.btn_elements = {}
 
+    # @escribano
+    # def get_sdk(self):
+    #     return { "sdk": self.sdk }
+
     def load_btn_elements_by_country(self):
         """
         """
-        country_key = check_output(['adb', 'shell', 'getprop', 'gsm.operator.iso-country']).decode('utf-8')[:-1]
+        country_key = check_output(['adb', '-s', self.device, 'shell', 'getprop', 'gsm.operator.iso-country']).decode('utf-8')[:-1]
         print(country_key)
         if '\r' in country_key:
             country_key = country_key.replace('\r', '')
@@ -73,7 +77,7 @@ class AndroidDevice(object):
             return lines
 
     def get_api_level(self):
-        output = check_output(['adb', 'shell', 'getprop', 'ro.build.version.sdk']).decode('utf-8')[:-1]
+        output = check_output(['adb', '-s', self.device, 'shell', 'getprop', 'ro.build.version.sdk']).decode('utf-8')[:-1]
         if '\r' in output:
             output = output.replace('\r', '')
         self.sdk = int(output)
@@ -90,16 +94,16 @@ class AndroidDevice(object):
         """
         Hang up or cancel the calling if there is one in progress
         """
-        check_call(['adb', 'shell', 'input', 'keyevent 6'])
+        check_call(['adb', '-s', self.device, 'shell', 'input', 'keyevent 6'])
 
     def get_current_call_state(self):
         # 0: no hay nada | 1: sonando | 2: llamando
-        output = check_output(['adb', 'shell', 'dumpsys', 'telephony.registry', '|', 'grep', 'mCallState'])
+        output = check_output(['adb', '-s', self.device, 'shell', 'dumpsys', 'telephony.registry', '|', 'grep', 'mCallState'])
         line = output.split()[0].decode('utf-8')
         return int(line[-1])
 
     def get_current_wifi_state(self):
-        output = check_output(['adb', 'shell', 'dumpsys', 'wifi', '|', 'grep', 'mNetworkInfo']).decode('utf-8')
+        output = check_output(['adb', '-s', self.device, 'shell', 'dumpsys', 'wifi', '|', 'grep', 'mNetworkInfo']).decode('utf-8')
         state = output[output.find('state'):output.find('reason')]
         return state.split()[1][:-1]
 
@@ -107,7 +111,7 @@ class AndroidDevice(object):
         """
         Open the settings menu by adb shel command
         """
-        check_call(['adb', 'shell', 'am', 'start', '-a', 'android.settings.SETTINGS'])
+        check_call(['adb', '-s', self.device, 'shell', 'am', 'start', '-a', 'android.settings.SETTINGS'])
 
     def turn_on_wifi_test(self):
         """
@@ -162,7 +166,10 @@ class AndroidDevice(object):
         self.hang_up()
         time.sleep(1)
         _hang_up = self.get_current_call_state()
-        return self.verify_call_process(_call, _hang_up)
+        return {
+            'sdk': self.sdk,
+            'res': self.verify_call_process(_call, _hang_up)
+        }
 
     @escribano
     def adb_wifi_test(self, value):
@@ -173,11 +180,17 @@ class AndroidDevice(object):
         if value == 0:
             self.turn_off_wifi_test()
             time.sleep(5)
-            return self.wifi_have_to_be(DISCONNECTED)
+            return {
+                'sdk': self.sdk,
+                'res': self.wifi_have_to_be(DISCONNECTED)
+            }
         elif value == 1:
             self.turn_on_wifi_test()
             time.sleep(5)
-            return self.wifi_have_to_be(CONNECTED)
+            return {
+                'sdk': self.sdk,
+                'res': self.wifi_have_to_be(CONNECTED)
+            }
 
     def find_by_image_button(self, text):
         _device = self.d(descriptionMatches='{0}'.format(text), className='android.widget.ImageButton')
@@ -277,7 +290,10 @@ class AndroidDevice(object):
         time.sleep(1)
         self.d.press.home()
         time.sleep(1)
-        return self.verify_call_process(_call, _hang_up)
+        return {
+            'sdk': self.sdk,
+            'res': self.verify_call_process(_call, _hang_up)
+        }
 
     def quick_turn_on_wifi(self):
         """
@@ -323,12 +339,18 @@ class AndroidDevice(object):
         time.sleep(10)
         if value == 0:
             self.quick_turn_off_wifi()
-            time.sleep(2)
-            return self.wifi_have_to_be(DISCONNECTED)
+            time.sleep(4)
+            return {
+                'sdk': self.sdk,
+                'res': self.wifi_have_to_be(DISCONNECTED)
+            }
         elif value == 1:
             self.quick_turn_on_wifi()
-            time.sleep(4)
-            return self.wifi_have_to_be(CONNECTED)
+            time.sleep(8)
+            return {
+                'sdk': self.sdk,
+                'res': self.wifi_have_to_be(CONNECTED)
+            }
 
     def setting_turn_on_wifi(self):
         """
@@ -373,18 +395,27 @@ class AndroidDevice(object):
         if value == 0:
             self.setting_turn_off_wifi()
             time.sleep(4)
-            return self.wifi_have_to_be(DISCONNECTED)
+            return {
+                'sdk': self.sdk,
+                'res': self.wifi_have_to_be(DISCONNECTED)
+            }
         elif value == 1:
             self.setting_turn_on_wifi()
-            time.sleep(6)
-            return self.wifi_have_to_be(CONNECTED)
+            time.sleep(8)
+            return {
+                'sdk': self.sdk,
+                'res': self.wifi_have_to_be(CONNECTED)
+            }
 
     def open_all_applications_menu(self):
         if self.sdk > 25:
+            # print(28)
             self.d.swipe(500, 800, 500, 100, steps=10)
         else:
-            _up_button = self.find_by_image_view('Apps list')
-            _up_button.click()
+            # print(25)
+            self.d.swipe(360, 980, 360, 100, steps=10)
+            # _up_button = self.find_by_image_view('Apps list')
+            # _up_button.click()
 
     def enter_operation(self, operation):
         for character in operation:
@@ -427,14 +458,20 @@ class AndroidDevice(object):
         actual_result = self.get_display_result().info['text']
         if isinstance(expected_result, list):
             if actual_result in expected_result:
-                return self.verify_result_operation(expected_result[expected_result.index(actual_result)], actual_result)
+                return {
+                    'sdk': self.sdk,
+                    'res': self.verify_result_operation(expected_result[expected_result.index(actual_result)], actual_result)
+                }
         else:
-            return self.verify_result_operation(expected_result, utils.clean_string_negative_values(actual_result))
+            return {
+                'sdk': self.sdk,
+                'res': self.verify_result_operation(expected_result, utils.clean_string_negative_values(actual_result))
+            }
 
     def uia_calculator_test(self, operations_to_do):
         self.d.press.home()
         self.open_all_applications_menu()
-        time.sleep(1)
+        time.sleep(3)
         self.find_by_text_view(self.btn_elements['calculator']).click()
         time.sleep(1)
         for operation in operations_to_do:

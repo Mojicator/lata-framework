@@ -1,0 +1,22 @@
+>>>>>>>>>> STARTING TEST - AT: 2020-05-21 21:28:19.006638 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-21 23:17:22.017360 <<<<<<<<<<
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 504.374902
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 51.386742
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 10.16833
+-
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 14.739816
+-
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 20.919079
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 13.810139
+-
+>>>>>>>>>> ENDING TEST - AT: 2020-05-21 23:27:37.506742 -> TIME: 615.489382 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-21 23:35:47.220212 <<<<<<<<<<

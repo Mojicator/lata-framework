@@ -4,17 +4,17 @@
         "key-pad": ["key pad", "dial pad"],
         "dial": "dial",
         "end-call": ["End call", "End Call"],
-        "wifi": ["Network & internet", "Wi‑Fi"],
+        "wifi": ["Network & internet", "Wi\u2011Fi"],
         "calculator": "Calculator",
         "operations": ["plus", "minus", "multiply", "divide", "delete", "clear"]
     },
     "mx": {
-        "phone": "Teléfono",
+        "phone": "Tel\u00E9fono",
         "key-pad": ["teclado"],
         "dial": "marcar",
         "end-call": ["Finalizar llamada"],
         "wifi": ["Conexiones", "Internet y red"],
         "calculator": "Calculadora",
-        "operations": ["más", "menos", "multiplicar", "división", "eliminar", "borrar"]
+        "operations": ["m\u00E1s", "menos", "multiplicar", "divisi\u00F3n", "eliminar", "borrar"]
     }
 }
