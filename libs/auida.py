@@ -25,10 +25,6 @@ class AndroidDevice(object):
         self.sdk = 25
         self.btn_elements = {}
 
-    # @escribano
-    # def get_sdk(self):
-    #     return { "sdk": self.sdk }
-
     def load_btn_elements_by_country(self):
         """
         """
@@ -390,6 +386,8 @@ class AndroidDevice(object):
         if self.sdk > 25:
             self.find_by_text_view(self.btn_elements['wifi'][1]).click()
         else:
+            # print('api 25 wifi')
+            # self.d.click(540, 934)
             self.find_by_text_view(self.btn_elements['wifi'][1]).click()
         time.sleep(2)
         if value == 0:
@@ -409,13 +407,17 @@ class AndroidDevice(object):
 
     def open_all_applications_menu(self):
         if self.sdk > 25:
-            # print(28)
             self.d.swipe(500, 800, 500, 100, steps=10)
         else:
-            # print(25)
-            self.d.swipe(360, 980, 360, 100, steps=10)
-            # _up_button = self.find_by_image_view('Apps list')
-            # _up_button.click()
+            try:
+                time.sleep(2)
+                _up_button = self.find_by_image_view('Apps list')
+                _up_button.click()
+            except:
+                time.sleep(1)
+                self.d.swipe(360, 980, 360, 100, steps=10)
+            finally:
+                self.d.click(360, 980)
 
     def enter_operation(self, operation):
         for character in operation:
@@ -470,6 +472,7 @@ class AndroidDevice(object):
 
     def uia_calculator_test(self, operations_to_do):
         self.d.press.home()
+        time.sleep(2)
         self.open_all_applications_menu()
         time.sleep(3)
         self.find_by_text_view(self.btn_elements['calculator']).click()

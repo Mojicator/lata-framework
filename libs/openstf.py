@@ -36,7 +36,7 @@ class Overseer(object):
         api_call = '/api/v1/user/devices/{0}'.format(self.devices[index]['serial'])
         url = urljoin(self.server, api_call)
         res = requests.get(url, headers=headers).json()
-        # print(res['device']['remoteConnectUrl'])
+        print(res['device']['remoteConnectUrl'])
         if not res['success']:
             raise Exception(res['description'])
         self.devices[index]['remoteConnectUrl'] = res['device']['remoteConnectUrl']
@@ -54,8 +54,6 @@ class Overseer(object):
         if not res['success']:
             raise Exception(res['description'])
         print(res)
-        # print('caca')
-        # self.get_adb_debug_connection(index)
 
     def stop_using_device(self, index):
         headers = {

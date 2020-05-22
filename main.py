@@ -8,10 +8,6 @@ from libs.openstf import Overseer
 from libs.auida import AndroidDevice
 from libs.escribano import Log
 import libs.utils as utils
-# import libs.openstf
-# import libs.auida
-# import libs.escribano
-# import libs.utils
 
 DATA_TEST_FILE = 'data-test.json'
 DELAY = 6
@@ -25,12 +21,12 @@ def execute_testing(device):
     log.start_test_log()
     with open('data-test.json') as json_file:
         data = json.load(json_file)
-        # time.sleep(1)
+        time.sleep(1)
         for wifi in data['wifies']:
             android.uia_settings_wifi_test(wifi)
         time.sleep(1)
         for wifi in data['wifies']:
-            android.uia_quick_wifi_test(wifi)
+                android.uia_quick_wifi_test(wifi)
         time.sleep(1)
         android.d.press.home()
         for phone in data['phones']:
@@ -70,14 +66,6 @@ if __name__ == '__main__':
                     t = threading.Thread(target=single_device_execution, args=(i,))
                     threads.append(t)
                     t.start()
-                    # overseer.use_device(i)
-                    # time.sleep(1)
-                    # overseer.get_adb_debug_connection(i)
-                    # overseer.connect_adb_device(i)
-                    # execute_testing()
-                    # overseer.disconnect_adb_device(i)
-                    # overseer.stop_using_device(i)
-                    # time.sleep(5)
     except Exception as e:
         _error_handler.append(e)
     finally:

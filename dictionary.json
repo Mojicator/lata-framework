@@ -4,7 +4,7 @@
         "key-pad": ["key pad", "dial pad"],
         "dial": "dial",
         "end-call": ["End call", "End Call"],
-        "wifi": ["Network & internet", "Wi\u2011Fi"],
+        "wifi": ["Network & internet", "Wi‑Fi"],
         "calculator": "Calculator",
         "operations": ["plus", "minus", "multiply", "divide", "delete", "clear"]
     },

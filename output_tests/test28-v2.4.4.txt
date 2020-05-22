@@ -1,0 +1,111 @@
+>>>>>>>>>> STARTING TEST - AT: 2020-05-22 02:56:53.580832 <<<<<<<<<<
+::single_operation DATA: 4+4 STATUS: PASS
+DURATION: 3.313566
+-
+::single_operation DATA: 9+6/2 STATUS: PASS
+DURATION: 4.944198
+-
+::single_operation DATA: 2.05-6 STATUS: PASS
+DURATION: 5.561498
+-
+::single_operation DATA: 14*52 STATUS: PASS
+DURATION: 4.927699
+-
+::single_operation DATA: 0/0 STATUS: PASS
+DURATION: 3.862201
+-
+::single_operation DATA: 0.9999+0.0001 STATUS: PASS
+DURATION: 11.855351
+-
+::single_operation DATA: 412.58/125*0.5 STATUS: PASS
+DURATION: 13.121392
+-
+>>>>>>>>>> ENDING TEST - AT: 2020-05-22 02:58:34.966357 -> TIME: 101.385525 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-22 02:59:43.378039 <<<<<<<<<<
+::single_operation DATA: 4+4 STATUS: PASS
+DURATION: 3.307366
+-
+::single_operation DATA: 9+6/2 STATUS: PASS
+DURATION: 5.499189
+-
+::single_operation DATA: 2.05-6 STATUS: PASS
+DURATION: 5.631351
+-
+::single_operation DATA: 14*52 STATUS: PASS
+DURATION: 5.404175
+-
+::single_operation DATA: 0/0 STATUS: PASS
+DURATION: 3.625989
+-
+::single_operation DATA: 0.9999+0.0001 STATUS: PASS
+DURATION: 12.246593
+-
+::single_operation DATA: 412.58/125*0.5 STATUS: PASS
+DURATION: 13.896063
+-
+>>>>>>>>>> ENDING TEST - AT: 2020-05-22 03:01:24.799792 -> TIME: 101.421753 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-22 03:12:41.353887 <<<<<<<<<<
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 46.893372
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 14.392863
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 9.918833
+-
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 13.97546
+-
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 16.146049
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 11.915325
+-
+::uia_calling_test DATA: 4492846104 STATUS: PASS
+DURATION: 92.94277
+-
+::uia_calling_test DATA: +33170619800 STATUS: PASS
+DURATION: 67.226561
+-
+::uia_calling_test DATA: +31208080808 STATUS: PASS
+DURATION: 41.673904
+-
+::uia_calling_test DATA: 911 STATUS: PASS
+DURATION: 116.55827
+-
+::uia_calling_test DATA: 098 STATUS: PASS
+DURATION: 54.867808
+-
+::uia_calling_test DATA: 9720151 STATUS: PASS
+DURATION: 57.754019
+-
+::uia_calling_test DATA: 9720525 STATUS: PASS
+DURATION: 57.751574
+-
+::uia_calling_test DATA: *133 STATUS: PASS
+DURATION: 30.248881
+-
+::single_operation DATA: 4+4 STATUS: PASS
+DURATION: 3.197615
+-
+::single_operation DATA: 9+6/2 STATUS: PASS
+DURATION: 5.011162
+-
+::single_operation DATA: 2.05-6 STATUS: PASS
+DURATION: 5.628418
+-
+::single_operation DATA: 14*52 STATUS: PASS
+DURATION: 4.884788
+-
+::single_operation DATA: 0/0 STATUS: PASS
+DURATION: 3.660574
+-
+::single_operation DATA: 0.9999+0.0001 STATUS: PASS
+DURATION: 12.319954
+-
+::single_operation DATA: 412.58/125*0.5 STATUS: PASS
+DURATION: 12.890034
+-
+>>>>>>>>>> ENDING TEST - AT: 2020-05-22 03:24:29.963252 -> TIME: 708.609365 <<<<<<<<<<

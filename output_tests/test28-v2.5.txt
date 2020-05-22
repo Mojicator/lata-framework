@@ -1,0 +1,110 @@
+>>>>>>>>>> STARTING TEST - AT: 2020-05-22 03:36:08.511354 <<<<<<<<<<
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 47.122291
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 11.839319
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 10.121194
+-
+::uia_settings_wifi_test DATA: 1 STATUS: FAIL
+ADB WiFi error state :: Expected CONNECTED/CONNECTED but got DISCONNECTED/DISCONNECTED
+DURATION: 14.433031
+-
+::uia_settings_wifi_test DATA: 1 STATUS: PASS
+DURATION: 15.909
+-
+::uia_settings_wifi_test DATA: 0 STATUS: PASS
+DURATION: 12.626908
+-
+::uia_quick_wifi_test DATA: 1 STATUS: PASS
+DURATION: 26.047054
+-
+::uia_quick_wifi_test DATA: 0 STATUS: PASS
+DURATION: 21.949131
+-
+::uia_quick_wifi_test DATA: 0 STATUS: PASS
+DURATION: 21.799874
+-
+::uia_quick_wifi_test DATA: 1 STATUS: PASS
+DURATION: 25.952854
+-
+::uia_quick_wifi_test DATA: 1 STATUS: PASS
+DURATION: 26.379154
+-
+::uia_quick_wifi_test DATA: 0 STATUS: PASS
+DURATION: 21.963252
+-
+::uia_calling_test DATA: 4492846104 STATUS: PASS
+DURATION: 93.289522
+-
+::uia_calling_test DATA: +33170619800 STATUS: PASS
+DURATION: 87.991347
+-
+::uia_calling_test DATA: +31208080808 STATUS: PASS
+DURATION: 55.748763
+-
+::uia_calling_test DATA: 911 STATUS: PASS
+DURATION: 113.441324
+-
+::uia_calling_test DATA: 098 STATUS: PASS
+DURATION: 53.99601
+-
+::uia_calling_test DATA: 9720151 STATUS: PASS
+DURATION: 58.00503
+-
+::uia_calling_test DATA: 9720525 STATUS: PASS
+DURATION: 58.028021
+-
+::uia_calling_test DATA: *133 STATUS: PASS
+DURATION: 23.872667
+-
+::single_operation DATA: 4+4 STATUS: PASS
+DURATION: 3.329332
+-
+::single_operation DATA: 9+6/2 STATUS: PASS
+DURATION: 4.947444
+-
+::single_operation DATA: 2.05-6 STATUS: PASS
+DURATION: 6.081033
+-
+::single_operation DATA: 14*52 STATUS: PASS
+DURATION: 4.991541
+-
+::single_operation DATA: 0/0 STATUS: PASS
+DURATION: 3.667103
+-
+::single_operation DATA: 0.9999+0.0001 STATUS: PASS
+DURATION: 12.386412
+-
+::single_operation DATA: 412.58/125*0.5 STATUS: PASS
+DURATION: 12.80256
+-
+>>>>>>>>>> ENDING TEST - AT: 2020-05-22 03:50:46.886212 -> TIME: 878.374858 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-22 03:52:32.136041 <<<<<<<<<<
+::uia_calling_test DATA: 4492846104 STATUS: PASS
+DURATION: 68.178472
+-
+::uia_calling_test DATA: +33170619800 STATUS: PASS
+DURATION: 77.210209
+-
+::uia_calling_test DATA: +31208080808 STATUS: PASS
+DURATION: 53.560384
+-
+::uia_calling_test DATA: 911 STATUS: PASS
+DURATION: 112.777763
+-
+::uia_calling_test DATA: 098 STATUS: PASS
+DURATION: 53.125655
+-
+::uia_calling_test DATA: 9720151 STATUS: PASS
+DURATION: 57.768707
+-
+::uia_calling_test DATA: 9720525 STATUS: PASS
+DURATION: 57.952629
+-
+::uia_calling_test DATA: *133 STATUS: PASS
+DURATION: 24.382292
+-
+>>>>>>>>>> ENDING TEST - AT: 2020-05-22 04:01:28.070058 -> TIME: 535.934017 <<<<<<<<<<

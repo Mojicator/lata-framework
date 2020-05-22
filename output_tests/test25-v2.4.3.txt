@@ -1,0 +1,45 @@
+>>>>>>>>>> STARTING TEST - AT: 2020-05-22 02:42:43.000873 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-22 02:45:03.677406 <<<<<<<<<<
+>>>>>>>>>> STARTING TEST - AT: 2020-05-22 02:48:33.771989 <<<<<<<<<<
+::uia_quick_wifi_test DATA: 1 STATUS: PASS
+DURATION: 54.949916
+-
+::uia_quick_wifi_test DATA: 0 STATUS: PASS
+DURATION: 22.401324
+-
+::uia_quick_wifi_test DATA: 0 STATUS: PASS
+DURATION: 22.290059
+-
+::uia_quick_wifi_test DATA: 1 STATUS: PASS
+DURATION: 26.434338
+-
+::uia_quick_wifi_test DATA: 1 STATUS: PASS
+DURATION: 26.240498
+-
+::uia_quick_wifi_test DATA: 0 STATUS: PASS
+DURATION: 22.317125
+-
+::uia_calling_test DATA: 4492846104 STATUS: PASS
+DURATION: 27.820277
+-
+::uia_calling_test DATA: +33170619800 STATUS: PASS
+DURATION: 28.415119
+-
+::uia_calling_test DATA: +31208080808 STATUS: PASS
+DURATION: 28.377079
+-
+::uia_calling_test DATA: 911 STATUS: PASS
+DURATION: 22.881509
+-
+::uia_calling_test DATA: 098 STATUS: PASS
+DURATION: 22.183126
+-
+::uia_calling_test DATA: 9720151 STATUS: PASS
+DURATION: 24.747309
+-
+::uia_calling_test DATA: 9720525 STATUS: PASS
+DURATION: 24.730411
+-
+::uia_calling_test DATA: *133 STATUS: PASS
+DURATION: 22.704705
+-
